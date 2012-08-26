@@ -25,6 +25,28 @@ static bool incomplete(lua_State* L, int status) {
   return ret;
 }
 
+static bool isPrintable(lua_State* L, int status) {
+  bool ret = false;
+
+  if(status == LUA_ERRSYNTAX) {
+    const char* mess = lua_tostring(L, -1);
+
+    if(strstr(mess, "unexpected symbol") != NULL) {
+      // pop off error message
+      lua_pop(L, 1);
+
+      const char* literal = lua_tostring(L, -1);
+      lua_pop(L, 1);
+
+      lua_pushfstring(L, "print(%s)", literal);
+
+      ret = true;
+    }
+  }
+
+  return ret;
+}
+
 static bool pushline(lua_State* L, bool isFirstLine) {
   char* line = NULL;
   const char* prompt = (isFirstLine) ? "> " : "... ";
@@ -49,6 +71,8 @@ int laco_loadline(lua_State* L) {
   while(true) {
     status = luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1),
                              "=stdin");
+
+    if(isPrintable(L, status)) continue;
     if(!incomplete(L, status)) break;
     if(!pushline(L, false)) return -1;
 

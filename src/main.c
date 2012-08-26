@@ -19,7 +19,7 @@ int main() {
   luaL_openlibs(L);
 
   while((error = laco_loadline(L)) != -1) {
-    error = lua_pcall(L, 0, 0, 0);
+    error = lua_pcall(L, 0, LUA_MULTRET, 0);
     if(error) {
       fprintf(stderr, "%s\n", lua_tostring(L, -1));
       lua_pop(L, 1);
