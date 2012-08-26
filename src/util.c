@@ -31,7 +31,9 @@ static bool isPrintable(lua_State* L, int status) {
   if(status == LUA_ERRSYNTAX) {
     const char* mess = lua_tostring(L, -1);
 
-    if(strstr(mess, "unexpected symbol") != NULL) {
+    bool isLiteral = strstr(mess,  "unexpected symbol") != NULL;
+    bool isVariable = strstr(mess, "'=' expected") != NULL;
+    if(isLiteral || isVariable) {
       // pop off error message
       lua_pop(L, 1);
 
