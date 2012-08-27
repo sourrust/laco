@@ -40,7 +40,7 @@ static bool isPrintable(lua_State* L, int status) {
       const char* literal = lua_tostring(L, -1);
       lua_pop(L, 1);
 
-      lua_pushfstring(L, "print(%s)", literal);
+      lua_pushfstring(L, "return %s", literal);
 
       ret = true;
     }
@@ -85,4 +85,17 @@ int laco_loadline(lua_State* L) {
   lua_remove(L, 1);
 
   return status;
+}
+
+void laco_handleline(lua_State* L) {
+  int status = 0;
+
+  status = lua_pcall(L, 0, LUA_MULTRET, 0);
+
+  printf("%s\n", lua_typename(L, lua_type(L, -1)));
+
+  if(status) {
+    fprintf(stderr, "%s\n", lua_tostring(L, -1));
+    lua_pop(L, 1);
+  }
 }
