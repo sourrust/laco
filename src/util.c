@@ -92,7 +92,8 @@ void laco_handleline(lua_State* L) {
 
   status = lua_pcall(L, 0, LUA_MULTRET, 0);
 
-  printf("%s\n", lua_typename(L, lua_type(L, -1)));
+  if(status == 0 && lua_gettop(L) > 0)
+    status = laco_printtype(L);
 
   if(status) {
     fprintf(stderr, "%s\n", lua_tostring(L, -1));
