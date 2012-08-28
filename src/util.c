@@ -8,6 +8,7 @@
 #include <lauxlib.h>
 
 #include "linenoise.h"
+#include "util/print.h"
 
 static bool incomplete(lua_State* L, int status) {
   bool ret = false;
