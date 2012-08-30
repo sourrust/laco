@@ -7,3 +7,6 @@ set(SOURCE ${DEPS_DIR}/linenoise/linenoise.c
 
 add_executable(laco ${SOURCE})
 target_link_libraries(laco ${LACO_LUA})
+
+install(TARGETS laco
+  RUNTIME DESTINATION bin)
