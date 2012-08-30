@@ -8,6 +8,7 @@
 #include <lauxlib.h>
 
 #include "linenoise.h"
+#include "util/print.h"
 
 static bool incomplete(lua_State* L, int status) {
   bool ret = false;
@@ -18,6 +19,30 @@ static bool incomplete(lua_State* L, int status) {
     // Check if the error ends in '<eof>'
     if(strstr(mess, LUA_QL("<eof>")) != NULL) {
       lua_pop(L, 1);
+      ret = true;
+    }
+  }
+
+  return ret;
+}
+
+static bool isPrintable(lua_State* L, int status) {
+  bool ret = false;
+
+  if(status == LUA_ERRSYNTAX) {
+    const char* mess = lua_tostring(L, -1);
+
+    bool isLiteral = strstr(mess,  "unexpected symbol") != NULL;
+    bool isVariable = strstr(mess, "'=' expected") != NULL;
+    if(isLiteral || isVariable) {
+      // pop off error message
+      lua_pop(L, 1);
+
+      const char* literal = lua_tostring(L, -1);
+      lua_pop(L, 1);
+
+      lua_pushfstring(L, "return %s", literal);
+
       ret = true;
     }
   }
@@ -49,6 +74,8 @@ int laco_loadline(lua_State* L) {
   while(true) {
     status = luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1),
                              "=stdin");
+
+    if(isPrintable(L, status)) continue;
     if(!incomplete(L, status)) break;
     if(!pushline(L, false)) return -1;
 
@@ -59,4 +86,18 @@ int laco_loadline(lua_State* L) {
   lua_remove(L, 1);
 
   return status;
+}
+
+void laco_handleline(lua_State* L) {
+  int status = 0;
+
+  status = lua_pcall(L, 0, LUA_MULTRET, 0);
+
+  if(status == 0 && lua_gettop(L) > 0)
+    status = laco_printtype(L);
+
+  if(status) {
+    fprintf(stderr, "%s\n", lua_tostring(L, -1));
+    lua_pop(L, 1);
+  }
 }
