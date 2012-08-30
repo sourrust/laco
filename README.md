@@ -39,6 +39,8 @@ here are the step on building.
 * Lua or Luajit
 
 ```bash
+git clone --recursive https://github.com/sourrust/laco.git
+cd laco
 mkdir build
 cd build
 cmake ..
