@@ -57,6 +57,8 @@ static bool pushline(lua_State* L, bool isFirstLine) {
 
   if((line = linenoise(prompt)) != NULL) {
     lua_pushstring(L, line);
+
+    linenoiseHistoryAdd(line);
     free(line);
     ret = true;
   }
