@@ -38,6 +38,9 @@ here are the step on building.
 * cmake
 * Lua or Luajit
 
+**Note**: This is for regular lua, to enable luajit you need to replace
+`cmake ..` with `cmake -DLACO_USE_LUAJIT=on ..`.
+
 ```bash
 git clone --recursive https://github.com/sourrust/laco.git
 cd laco
