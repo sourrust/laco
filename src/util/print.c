@@ -26,6 +26,10 @@ static void printKeyValue(lua_State* L, char startchar) {
       toLuaString(L));
 }
 
+static void printList(lua_State* L, char startchar) {
+  printf("%c%s", startchar, toLuaString(L));
+}
+
 static void printTable(lua_State* L) {
   bool firstelem = true;
   int luatype;
@@ -39,6 +43,9 @@ static void printTable(lua_State* L) {
     // tables and index value tables.
     if(luatype == LUA_TSTRING) {
       printKeyValue(L, (firstelem) ? '{' : ',');
+      firstelem = false;
+    } else {
+      printList(L, (firstelem) ? '{' : ',');
       firstelem = false;
     }
     lua_pop(L, 1);
