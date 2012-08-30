@@ -19,7 +19,4 @@ find_library(LUA luajit-51)
 
 include_directories("/usr/local/include/luajit-2.0")
 
-# add_executable(laco lua_example.c deps/linenoise/linenoise.c)
-# target_link_libraries(laco ${LUA})
-
 add_subdirectory(src)
