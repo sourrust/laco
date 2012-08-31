@@ -4,6 +4,12 @@ project(laco)
 
 set(EXECUTABLE_OUTPUT_PATH "${laco_BINARY_DIR}/bin")
 
+set(LACO_VERSION_STRING "0.1.0")
+execute_process(COMMAND "date" "+%a %b %d, %Y %T"
+  OUTPUT_VARIABLE LACO_TIMESTAMP)
+
+string(REGEX REPLACE "\n" "" LACO_TIMESTAMP ${LACO_TIMESTAMP})
+
 option(LACO_USE_LUAJIT "Use luajit libraries." off)
 
 if(LACO_USE_LUAJIT)
@@ -21,11 +27,22 @@ if(LACO_USE_LUAJIT)
   find_library(LACO_LUA luajit-51)
 
   include_directories("/usr/local/include/luajit-2.0")
+
+  set(LACO_LUA_USED "luajit")
 else()
   find_package(Lua51 REQUIRED)
 
   include_directories(${LUA_INCLUDE_DIR})
   set(LACO_LUA ${LUA_LIBRARIES})
+
+  set(LACO_LUA_USED "lua")
 endif()
+
+# for lacoconf includes
+include_directories("${laco_BINARY_DIR}/include")
+
+configure_file(
+  "${laco_SOURCE_DIR}/src/lacoconf.h.in"
+  "${laco_BINARY_DIR}/include/lacoconf.h")
 
 add_subdirectory(src)
