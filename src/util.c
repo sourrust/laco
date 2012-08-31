@@ -103,3 +103,15 @@ void laco_handleline(lua_State* L) {
     lua_pop(L, 1);
   }
 }
+
+void laco_kill(lua_State* L, int status, const char* message) {
+  if(L != NULL) {
+    lua_close(L);
+  }
+
+  if(message != NULL) {
+    fprintf(stderr, "%s\n", message);
+  }
+
+  exit(status);
+}
