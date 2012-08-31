@@ -13,8 +13,8 @@ int main(int argc, const char** argv) {
     return -1;
   }
 
-  if(argc > 0) {
-    laco_handleFlag(L, argv[0]);
+  if(argc > 1) {
+    laco_handleFlag(L, argv[1]);
   }
 
   luaL_openlibs(L);
