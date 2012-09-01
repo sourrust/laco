@@ -17,10 +17,13 @@ static bool incomplete(lua_State* L, int status) {
   bool ret = false;
 
   if(status == LUA_ERRSYNTAX) {
-    const char* mess = lua_tostring(L, -1);
+    size_t lmess;
+    const char* mess = lua_tolstring(L, -1, &lmess);
 
     // Check if the error ends in '<eof>'
-    if(strstr(mess, LUA_QL("<eof>")) != NULL) {
+    size_t eofsize = sizeof(LUA_QL("<eof>") - 1);
+    const char* mess_end = mess + lmess - eofsize;
+    if(strstr(mess, LUA_QL("<eof>")) == mess_end) {
       lua_pop(L, 1);
       ret = true;
     }
