@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include "laco.h"
-#include "lacoconf.h"
 #include "util.h"
 
 typedef struct LacoState LacoState;
@@ -27,7 +26,9 @@ static int isHelp(const char* arg) {
 }
 
 static void printVersion(LacoState* state) {
-  printf("laco version %s\n", LACO_VERSION);
+  const char* version = laco_getLacoVersion(state);
+
+  printf("laco version %s\n", version);
   laco_kill(state, 0, NULL);
 }
 
@@ -40,7 +41,8 @@ static void printHelp(LacoState* state) {
   laco_kill(state, 0, NULL);
 }
 
-void laco_handleFlag(LacoState* state, const char* arg) {
+void laco_handleFlag(LacoState* state) {
+  const char* arg = laco_getArguments(state)[1];
   if(arg == NULL) return;
 
   char argtype;

@@ -1,3 +1,3 @@
 struct LacoState;
 
-void laco_handleFlag(struct LacoState*, const char*);
+void laco_handleFlag(struct LacoState*);

@@ -33,7 +33,7 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
   }
 
   if(state->argc > 1) {
-    laco_handleFlag(state, state->argv[1]);
+    laco_handleFlag(state);
   }
 
   luaL_openlibs(state->L);
@@ -61,4 +61,16 @@ int laco_deleteLacoState(LacoState* state) {
 
 lua_State* laco_getLuaState(LacoState* state) {
   return state->L;
+}
+
+const char** laco_getArguments(LacoState* state) {
+  return state->argv;
+}
+
+int laco_getArgumentCount(LacoState* state) {
+  return state->argc;
+}
+
+const char* laco_getLacoVersion(LacoState* state) {
+  return state->version;
 }
