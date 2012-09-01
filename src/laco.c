@@ -29,7 +29,7 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
   state->L       = luaL_newstate();
 
   if(state->L == NULL) {
-    laco_kill(state->L, -1, "Couldn't initialize lua state.");
+    laco_kill(state, -1, "Couldn't initialize lua state.");
   }
 
   if(state->argc > 1) {
@@ -45,7 +45,9 @@ int laco_deleteLacoState(LacoState* state) {
   int result;
 
   if(state != NULL) {
-    lua_close(state->L);
+    if(state->L != NULL) {
+      lua_close(state->L);
+    }
     free(state);
 
     state = NULL;

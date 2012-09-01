@@ -3,10 +3,9 @@
 
 int main(int argc, const char** argv) {
   struct LacoState* state = laco_newLacoState(argc, argv);
-  struct lua_State* L = laco_getLuaState(state);
 
-  while(laco_loadline(L) != -1) {
-    laco_handleline(L);
+  while(laco_loadline(state) != -1) {
+    laco_handleline(state);
   }
 
   laco_deleteLacoState(state);

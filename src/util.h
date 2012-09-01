@@ -1,7 +1,7 @@
-struct lua_State;
+struct LacoState;
 
-int laco_loadline(struct lua_State*);
+int laco_loadline(struct LacoState*);
 
-void laco_handleline(struct lua_State*);
+void laco_handleline(struct LacoState*);
 
-void laco_kill(struct lua_State*, int, const char*);
+void laco_kill(struct LacoState*, int, const char*);
