@@ -14,23 +14,26 @@
 typedef struct LacoState LacoState;
 
 static bool incomplete(lua_State* L, int status) {
-  bool ret = false;
+  bool result = false;
 
   if(status == LUA_ERRSYNTAX) {
-    const char* mess = lua_tostring(L, -1);
+    size_t lmess;
+    const char* mess = lua_tolstring(L, -1, &lmess);
 
     // Check if the error ends in '<eof>'
-    if(strstr(mess, LUA_QL("<eof>")) != NULL) {
+    size_t eofsize = sizeof(LUA_QL("<eof>")) - 1;
+    const char* mess_end = mess + lmess - eofsize;
+    if(strstr(mess, LUA_QL("<eof>")) == mess_end) {
       lua_pop(L, 1);
-      ret = true;
+      result = true;
     }
   }
 
-  return ret;
+  return result;
 }
 
 static bool isPrintable(lua_State* L, int status) {
-  bool ret = false;
+  bool result = false;
 
   if(status == LUA_ERRSYNTAX) {
     const char* mess = lua_tostring(L, -1);
@@ -46,27 +49,37 @@ static bool isPrintable(lua_State* L, int status) {
 
       lua_pushfstring(L, "return %s", literal);
 
-      ret = true;
+      result = true;
+    }
+  } else if(lua_type(L, -1) == LUA_TFUNCTION) {
+    const char* func = lua_tostring(L, -2);
+
+    // check for a return statement
+    if(!strstr(func, "return ")) {
+      lua_pop(L, 2);
+      lua_pushfstring(L, "return %s", func);
+
+      result = true;
     }
   }
 
-  return ret;
+  return result;
 }
 
 static bool pushline(lua_State* L, bool isFirstLine) {
   char* line = NULL;
   const char* prompt = (isFirstLine) ? "> " : "... ";
-  bool ret = false;
+  bool result = false;
 
   if((line = linenoise(prompt)) != NULL) {
     lua_pushstring(L, line);
 
     linenoiseHistoryAdd(line);
     free(line);
-    ret = true;
+    result = true;
   }
 
-  return ret;
+  return result;
 }
 
 int laco_loadline(LacoState* state) {
