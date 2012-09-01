@@ -1,3 +1,6 @@
+#ifndef __LACO_H
+#define __LACO_H
+
 struct LacoState;
 struct lua_State;
 
@@ -8,3 +11,5 @@ struct lua_State* laco_getLuaState(struct LacoState*);
 const char** laco_getArguments(struct LacoState*);
 int laco_getArgumentCount(struct LacoState*);
 const char* laco_getLacoVersion(struct LacoState*);
+
+#endif /* __LACO_H */

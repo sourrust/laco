@@ -1,3 +1,8 @@
+#ifndef __LACOCONF_H
+#define __LACOCONF_H
+
 #define LACO_VERSION   "@LACO_VERSION_STRING@"
 #define LACO_LUA_USED  "@LACO_LUA_USED@"
 #define LACO_TIMESTAMP "@LACO_TIMESTAMP@"
+
+#endif /* __LACOCONF_H */
