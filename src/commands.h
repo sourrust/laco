@@ -1,3 +1,3 @@
-struct lua_State;
+struct LacoState;
 
-void laco_handleFlag(struct lua_State*, const char*);
+void laco_handleFlag(struct LacoState*, const char*);

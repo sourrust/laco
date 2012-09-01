@@ -33,7 +33,7 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
   }
 
   if(state->argc > 1) {
-    laco_handleFlag(state->L, state->argv[1]);
+    laco_handleFlag(state, state->argv[1]);
   }
 
   luaL_openlibs(state->L);

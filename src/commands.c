@@ -3,8 +3,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "laco.h"
 #include "lacoconf.h"
 #include "util.h"
+
+typedef struct LacoState LacoState;
 
 static int isVersion(const char* arg) {
   size_t size = strlen(arg);
@@ -23,21 +26,21 @@ static int isHelp(const char* arg) {
   return shorthand || normalhand;
 }
 
-static void printVersion(struct lua_State* L) {
+static void printVersion(LacoState* state) {
   printf("laco version %s\n", LACO_VERSION);
-  laco_kill(L, 0, NULL);
+  laco_kill(state, 0, NULL);
 }
 
-static void printHelp(struct lua_State* L) {
+static void printHelp(LacoState* state) {
   puts("A better REPL for Lua.\n");
   puts("Usage: laco [options]\n");
   puts("-h | -? | --help   \tPrint this help screen");
   puts("-v | --version     \tPrint current version");
 
-  laco_kill(L, 0, NULL);
+  laco_kill(state, 0, NULL);
 }
 
-void laco_handleFlag(struct lua_State* L, const char* arg) {
+void laco_handleFlag(LacoState* state, const char* arg) {
   if(arg == NULL) return;
 
   char argtype;
@@ -49,9 +52,9 @@ void laco_handleFlag(struct lua_State* L, const char* arg) {
 
   switch(argtype) {
     case 'v':
-      printVersion(L);
+      printVersion(state);
     case 'h':
-      printHelp(L);
+      printHelp(state);
     default:
       break;
   }
