@@ -8,7 +8,10 @@
 #include <lauxlib.h>
 
 #include "linenoise.h"
+#include "laco.h"
 #include "util/print.h"
+
+typedef struct LacoState LacoState;
 
 static bool incomplete(lua_State* L, int status) {
   bool ret = false;
@@ -66,8 +69,10 @@ static bool pushline(lua_State* L, bool isFirstLine) {
   return ret;
 }
 
-int laco_loadline(lua_State* L) {
+int laco_loadline(LacoState* state) {
   int status = 0;
+  lua_State* L = laco_getLuaState(state);
+
   lua_settop(L, 0);
 
   if(!pushline(L, true)) return -1;
@@ -90,8 +95,9 @@ int laco_loadline(lua_State* L) {
   return status;
 }
 
-void laco_handleline(lua_State* L) {
+void laco_handleline(LacoState* state) {
   int status = 0;
+  lua_State* L = laco_getLuaState(state);
 
   status = lua_pcall(L, 0, LUA_MULTRET, 0);
 
@@ -104,10 +110,8 @@ void laco_handleline(lua_State* L) {
   }
 }
 
-void laco_kill(lua_State* L, int status, const char* message) {
-  if(L != NULL) {
-    lua_close(L);
-  }
+void laco_kill(LacoState* state, int status, const char* message) {
+  laco_deleteLacoState(state);
 
   if(message != NULL) {
     fprintf(stderr, "%s\n", message);

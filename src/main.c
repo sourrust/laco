@@ -1,28 +1,13 @@
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-
-#include "commands.h"
+#include "laco.h"
 #include "util.h"
 
 int main(int argc, const char** argv) {
-  lua_State* L = luaL_newstate();
+  struct LacoState* state = laco_newLacoState(argc, argv);
 
-  if(L == NULL) {
-    puts("Couldn't initialize lua state");
-    return -1;
+  while(laco_loadline(state) != -1) {
+    laco_handleline(state);
   }
 
-  if(argc > 1) {
-    laco_handleFlag(L, argv[1]);
-  }
-
-  luaL_openlibs(L);
-
-  while(laco_loadline(L) != -1) {
-    laco_handleline(L);
-  }
-
-  lua_close(L);
+  laco_deleteLacoState(state);
   return 0;
 }
