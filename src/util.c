@@ -20,7 +20,7 @@ static bool incomplete(lua_State* L, int status) {
     size_t lmess;
     const char* mess = lua_tolstring(L, -1, &lmess);
 
-    // Check if the error ends in '<eof>'
+    /* Check if the error ends in '<eof>' */
     size_t eofsize = sizeof(LUA_QL("<eof>")) - 1;
     const char* mess_end = mess + lmess - eofsize;
     if(strstr(mess, LUA_QL("<eof>")) == mess_end) {
@@ -41,7 +41,7 @@ static bool isPrintable(lua_State* L, int status) {
     bool isLiteral = strstr(mess,  "unexpected symbol") != NULL;
     bool isVariable = strstr(mess, "'=' expected") != NULL;
     if(isLiteral || isVariable) {
-      // pop off error message
+      /* pop off error message */
       lua_pop(L, 1);
 
       const char* literal = lua_tostring(L, -1);
@@ -54,7 +54,7 @@ static bool isPrintable(lua_State* L, int status) {
   } else if(lua_type(L, -1) == LUA_TFUNCTION) {
     const char* func = lua_tostring(L, -2);
 
-    // check for a return statement
+    /* check for a return statement */
     if(!strstr(func, "return ")) {
       lua_pop(L, 2);
       lua_pushfstring(L, "return %s", func);
@@ -90,7 +90,7 @@ int laco_loadline(LacoState* state) {
 
   if(!pushline(L, true)) return -1;
 
-  // Until complete line
+  /* Until complete line */
   while(true) {
     status = luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1),
                              "=stdin");
