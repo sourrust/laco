@@ -13,6 +13,14 @@
 
 typedef struct LacoState LacoState;
 
+void reportError(lua_State* L, int status) {
+  if(status != 0 && lua_isstring(L, -1)) {
+    fprintf(stderr, "%s\n", lua_tostring(L, -1));
+    fflush(stderr);
+    lua_pop(L, 1);
+  }
+}
+
 static bool incomplete(lua_State* L, int status) {
   bool result = false;
 
@@ -83,7 +91,7 @@ static bool pushline(lua_State* L, bool isFirstLine) {
 }
 
 int laco_loadline(LacoState* state) {
-  int status = 0;
+  int status = laco_getCurrentStatus(state);
   lua_State* L = laco_getLuaState(state);
 
   lua_settop(L, 0);
@@ -104,23 +112,27 @@ int laco_loadline(LacoState* state) {
     lua_concat(L, 3);
   }
   lua_remove(L, 1);
+  laco_setCurrentStatus(state, status);
 
   return status;
 }
 
 void laco_handleline(LacoState* state) {
-  int status = 0;
+  int status = laco_getCurrentStatus(state);
   lua_State* L = laco_getLuaState(state);
 
-  status = lua_pcall(L, 0, LUA_MULTRET, 0);
+  if(status == 0) {
+    status = lua_pcall(L, 0, LUA_MULTRET, 0);
+  }
+
+  reportError(L, status);
 
   if(status == 0 && lua_gettop(L) > 0)
     status = laco_printtype(L);
 
-  if(status) {
-    fprintf(stderr, "%s\n", lua_tostring(L, -1));
-    lua_pop(L, 1);
-  }
+  reportError(L, status);
+
+  laco_setCurrentStatus(state, status);
 }
 
 void laco_kill(LacoState* state, int status, const char* message) {
