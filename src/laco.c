@@ -10,21 +10,9 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
-struct LacoState {
-  lua_State* L;
-  const char* version;
-
-  int argc;
-  const char** argv;
-
-  int status;
-};
-
 typedef struct LacoState LacoState;
 
-LacoState* laco_newLacoState(int argc, const char** argv) {
-  LacoState* state = malloc(sizeof(LacoState));
-
+void laco_initLacoState(LacoState* state, int argc, const char** argv) {
   state->version = LACO_VERSION;
   state->argc    = argc;
   state->argv    = argv;
@@ -40,48 +28,19 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
   }
 
   luaL_openlibs(state->L);
-
-  return state;
 }
 
-int laco_deleteLacoState(LacoState* state) {
+int laco_destroyLacoState(LacoState* state) {
   int result;
 
   if(state != NULL) {
     if(state->L != NULL) {
       lua_close(state->L);
     }
-    free(state);
-
-    state = NULL;
     result = 1;
   } else {
     result = 0;
   }
 
   return result;
-}
-
-lua_State* laco_getLuaState(LacoState* state) {
-  return state->L;
-}
-
-const char** laco_getArguments(LacoState* state) {
-  return state->argv;
-}
-
-int laco_getArgumentCount(LacoState* state) {
-  return state->argc;
-}
-
-const char* laco_getLacoVersion(LacoState* state) {
-  return state->version;
-}
-
-int laco_getCurrentStatus(LacoState* state) {
-  return state->status;
-}
-
-void laco_setCurrentStatus(LacoState* state, int status) {
-  state->status = status;
 }
