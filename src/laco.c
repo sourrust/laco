@@ -16,6 +16,8 @@ struct LacoState {
 
   int argc;
   const char** argv;
+
+  int status;
 };
 
 typedef struct LacoState LacoState;
@@ -27,6 +29,7 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
   state->argc    = argc;
   state->argv    = argv;
   state->L       = luaL_newstate();
+  state->status  = 0;
 
   if(state->L == NULL) {
     laco_kill(state, -1, "Couldn't initialize lua state.");
@@ -73,4 +76,12 @@ int laco_getArgumentCount(LacoState* state) {
 
 const char* laco_getLacoVersion(LacoState* state) {
   return state->version;
+}
+
+int laco_getCurrentStatus(LacoState* state) {
+  return state->status;
+}
+
+void laco_setCurrentStatus(LacoState* state, int status) {
+  state->status = status;
 }
