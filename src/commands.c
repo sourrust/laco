@@ -26,7 +26,7 @@ static int isHelp(const char* arg) {
 }
 
 static void printVersion(LacoState* state) {
-  const char* version = laco_getLacoVersion(state);
+  const char* version = state->version;
 
   printf("laco version %s\n", version);
   laco_kill(state, 0, NULL);
@@ -42,7 +42,7 @@ static void printHelp(LacoState* state) {
 }
 
 void laco_handleFlag(LacoState* state) {
-  const char* arg = laco_getArguments(state)[1];
+  const char* arg = state->argv[1];
   if(arg == NULL) return;
 
   char argtype;
