@@ -63,7 +63,8 @@ static bool isPrintable(lua_State* L, int status) {
     const char* func = lua_tostring(L, -2);
 
     /* check for a return statement */
-    if(!strstr(func, "return ")) {
+    bool isAssignment = strstr(func, "=");
+    if(!strstr(func, "return ") && !isAssignment) {
       lua_pop(L, 2);
       lua_pushfstring(L, "return %s", func);
 

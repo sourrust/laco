@@ -4,7 +4,7 @@ project(laco)
 
 set(EXECUTABLE_OUTPUT_PATH "${laco_BINARY_DIR}/bin")
 
-set(LACO_VERSION_STRING "0.1.1")
+set(LACO_VERSION_STRING "0.1.2")
 execute_process(COMMAND "date" "+%a %b %d, %Y %T"
   OUTPUT_VARIABLE LACO_TIMESTAMP)
 
