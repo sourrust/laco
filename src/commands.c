@@ -8,6 +8,7 @@
 
 typedef struct LacoState LacoState;
 
+/* Check if the command flag is for version */
 static int isVersion(const char* arg) {
   size_t size = strlen(arg);
   int shorthand  = memcmp(arg, "-v", size) == 0;
@@ -16,6 +17,7 @@ static int isVersion(const char* arg) {
   return shorthand || normalhand;
 }
 
+/* Check if the command flag is for help */
 static int isHelp(const char* arg) {
   size_t size = strlen(arg);
   int shorthand  = memcmp(arg, "-h", size) == 0
@@ -25,6 +27,7 @@ static int isHelp(const char* arg) {
   return shorthand || normalhand;
 }
 
+/* Print off the current version of laco */
 static void printVersion(LacoState* state) {
   const char* version = state->version;
 
@@ -32,6 +35,7 @@ static void printVersion(LacoState* state) {
   laco_kill(state, 0, NULL);
 }
 
+/* Print off the help screen */
 static void printHelp(LacoState* state) {
   puts("A better REPL for Lua.\n");
   puts("Usage: laco [options]\n");
@@ -40,6 +44,8 @@ static void printHelp(LacoState* state) {
 
   laco_kill(state, 0, NULL);
 }
+
+/* External API */
 
 void laco_handleFlag(LacoState* state) {
   const char* arg = state->argv[1];

@@ -8,7 +8,7 @@ well.
 
 ## Features
 
-Printing of tables instead of just the table address.
+* Printing of tables instead of just the table address.
 
 ```lua
 > {foo=true, bar=42}
@@ -18,6 +18,8 @@ Printing of tables instead of just the table address.
 > {1,2,3,4}
 {1,2,3,4}
 ```
+
+* In memory history, so pressing up will go to the previous line.
 
 This is still in early development so there isn't much so far, but I
 think its enough to use a replacement (atleast for luajit users).
@@ -38,8 +40,10 @@ here are the step on building.
 * cmake
 * Lua or Luajit
 
-**Note**: This is for regular lua, to enable luajit you need to replace
-`cmake ..` with `cmake -DLACO_USE_LUAJIT=on ..`.
+**Note**: This is for regular lua, to enable luajit you need to replace.
+`cmake ..` with `cmake -DLACO_USE_LUAJIT=on ..`. Also if you are using
+anything lua 5.2+, I'm not sure if this will work since I've only tested
+on luajit which is currently 5.1
 
 ```bash
 git clone --recursive https://github.com/sourrust/laco.git
