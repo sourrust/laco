@@ -13,6 +13,7 @@
 
 typedef struct LacoState LacoState;
 
+/* Prints out and pops off errors */
 void reportError(lua_State* L, int status) {
   if(status != 0 && lua_isstring(L, -1)) {
     fprintf(stderr, "%s\n", lua_tostring(L, -1));
@@ -21,6 +22,7 @@ void reportError(lua_State* L, int status) {
   }
 }
 
+/* Check if line is incomplete */
 static bool incomplete(lua_State* L, int status) {
   bool result = false;
 
@@ -40,6 +42,7 @@ static bool incomplete(lua_State* L, int status) {
   return result;
 }
 
+/* Check if line can be printed */
 static bool isPrintable(lua_State* L, int status) {
   bool result = false;
 
@@ -75,6 +78,7 @@ static bool isPrintable(lua_State* L, int status) {
   return result;
 }
 
+/* Push a line to the stack and store in history */
 static bool pushline(lua_State* L, bool isFirstLine) {
   char* line = NULL;
   const char* prompt = (isFirstLine) ? "> " : "... ";
@@ -90,6 +94,8 @@ static bool pushline(lua_State* L, bool isFirstLine) {
 
   return result;
 }
+
+/* External API */
 
 int laco_loadline(LacoState* state) {
   int status = state->status;

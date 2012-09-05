@@ -5,6 +5,7 @@
 
 #include <lua.h>
 
+/* C Wrapper for lua's tostring function  */
 inline static const char* toLuaString(lua_State* L) {
   const char* result = NULL;
 
@@ -20,16 +21,20 @@ inline static const char* toLuaString(lua_State* L) {
   return result;
 }
 
+/* Format printing of a single key value pair */
 static void printKeyValue(lua_State* L, char startchar) {
   printf("%c %s = %s\n",
       startchar, lua_tostring(L, -2),
       toLuaString(L));
 }
 
+/* Format printing of a single list element */
 static void printList(lua_State* L, char startchar) {
   printf("%c%s", startchar, toLuaString(L));
 }
 
+
+/* Print both types of tables */
 static void printTable(lua_State* L) {
   bool firstelem = true;
   int luatype;
@@ -55,6 +60,8 @@ static void printTable(lua_State* L) {
   puts("}");
   lua_pop(L, 1);
 }
+
+/* External API*/
 
 int laco_printtype(lua_State* L) {
   int status = 0;
