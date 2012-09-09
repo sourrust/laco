@@ -30,7 +30,13 @@ static void printKeyValue(lua_State* L, char startchar) {
 
 /* Format printing of a single list element */
 static void printList(lua_State* L, char startchar) {
-  printf("%c%s", startchar, toLuaString(L));
+  const char* format = NULL;
+  if(startchar == '{') {
+    format = "%c%s";
+  } else {
+    format = "%c %s";
+  }
+  printf(format, startchar, toLuaString(L));
 }
 
 
