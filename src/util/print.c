@@ -40,22 +40,30 @@ static void printTable(lua_State* L) {
   int luatype;
 
   lua_pushnil(L);
-  while(lua_next(L, -2) != 0) {
-    luatype = lua_type(L, -2);
 
-    /**
-     * Check if the key it actually a string, because lua_isstring returns
-     * true for numbers and we have a different printing for key value
-     * tables and index value tables.
-     */
-    if(luatype == LUA_TSTRING) {
-      printKeyValue(L, (firstelem) ? '{' : ',');
-      firstelem = false;
-    } else {
-      printList(L, (firstelem) ? '{' : ',');
-      firstelem = false;
-    }
-    lua_pop(L, 1);
+  /* check to see if table is empty */
+  size_t tablesize = lua_objlen(L, -2);
+  int hasElements  = lua_next(L, -2);
+  if(tablesize == 0 && hasElements == 0) {
+    printf("{ ");
+  } else {
+    do {
+      luatype = lua_type(L, -2);
+
+      /**
+       * Check if the key it actually a string, because lua_isstring returns
+       * true for numbers and we have a different printing for key value
+       * tables and index value tables.
+       */
+      if(luatype == LUA_TSTRING) {
+        printKeyValue(L, (firstelem) ? '{' : ',');
+        firstelem = false;
+      } else {
+        printList(L, (firstelem) ? '{' : ',');
+        firstelem = false;
+      }
+      lua_pop(L, 1);
+    } while(lua_next(L, -2) != 0);
   }
   puts("}");
   lua_pop(L, 1);
