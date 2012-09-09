@@ -78,3 +78,11 @@ int laco_printtype(lua_State* L) {
 
   return status;
 }
+
+void laco_reportError(lua_State* L, int status) {
+  if(status != 0 && lua_isstring(L, -1)) {
+    fprintf(stderr, "%s\n", lua_tostring(L, -1));
+    fflush(stderr);
+    lua_pop(L, 1);
+  }
+}

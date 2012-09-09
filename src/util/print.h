@@ -13,4 +13,13 @@ struct lua_State;
  */
 int laco_printtype(struct lua_State*);
 
+
+/**
+ * Prints out and pops off errors pushed into the lua stack
+ *
+ * param          pointer to lua_State
+ * param          incoming lua stack status
+ */
+void laco_reportError(struct lua_State*, int);
+
 #endif /* __PRINT_H */
