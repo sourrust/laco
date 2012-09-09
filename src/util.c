@@ -13,15 +13,6 @@
 
 typedef struct LacoState LacoState;
 
-/* Prints out and pops off errors */
-void reportError(lua_State* L, int status) {
-  if(status != 0 && lua_isstring(L, -1)) {
-    fprintf(stderr, "%s\n", lua_tostring(L, -1));
-    fflush(stderr);
-    lua_pop(L, 1);
-  }
-}
-
 /* Check if line is incomplete */
 static bool incomplete(lua_State* L, int status) {
   bool result = false;
@@ -132,12 +123,13 @@ void laco_handleline(LacoState* state) {
     status = lua_pcall(L, 0, LUA_MULTRET, 0);
   }
 
-  reportError(L, status);
+  laco_reportError(L, status);
 
-  if(status == 0 && lua_gettop(L) > 0)
+  if(status == 0 && lua_gettop(L) > 0) {
     status = laco_printtype(L);
 
-  reportError(L, status);
+    laco_reportError(L, status);
+  }
 
   state->status = status;
 }

@@ -16,7 +16,7 @@ well.
 , bar = 42
 }
 > {1,2,3,4}
-{1,2,3,4}
+{1, 2, 3, 4}
 ```
 
 * In memory history, so pressing up will go to the previous line.
