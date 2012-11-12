@@ -24,7 +24,7 @@ if(LACO_USE_LUAJIT)
         "-pagezero_size 10000 -image_base 100000000")
   endif()
 
-  find_library(LACO_LUA luajit-51)
+  find_library(LACO_LUA luajit-5.1)
 
   include_directories("/usr/local/include/luajit-2.0")
 
