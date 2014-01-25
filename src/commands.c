@@ -10,19 +10,17 @@ typedef struct LacoState LacoState;
 
 /* Check if the command flag is for version */
 static int isVersion(const char* arg) {
-  size_t size = strlen(arg);
-  int shorthand  = memcmp(arg, "-v", size) == 0;
-  int normalhand = memcmp(arg, "--version", size) == 0;
+  int shorthand  = strcmp(arg, "-v") == 0;
+  int normalhand = strcmp(arg, "--version") == 0;
 
   return shorthand || normalhand;
 }
 
 /* Check if the command flag is for help */
 static int isHelp(const char* arg) {
-  size_t size = strlen(arg);
-  int shorthand  = memcmp(arg, "-h", size) == 0
-                || memcmp(arg, "-?", size) == 0;
-  int normalhand = memcmp(arg, "--help", size) == 0;
+  int shorthand  = strcmp(arg, "-h") == 0
+                || strcmp(arg, "-?") == 0;
+  int normalhand = strcmp(arg, "--help") == 0;
 
   return shorthand || normalhand;
 }
