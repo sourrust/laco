@@ -11,8 +11,6 @@
 #include "laco.h"
 #include "util/print.h"
 
-typedef struct LacoState LacoState;
-
 /* Check if line is incomplete */
 static bool incomplete(lua_State* L, int status) {
   bool result = false;

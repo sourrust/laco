@@ -14,6 +14,8 @@ struct LacoState {
   int status;
 };
 
+typedef struct LacoState LacoState;
+
 /**
  * Initilazation of laco's state
  *
@@ -21,7 +23,7 @@ struct LacoState {
  * param          argument count (argc)
  * param          arguments      (argv)
  */
-void laco_initLacoState(struct LacoState*, int, const char**);
+void laco_initLacoState(LacoState*, int, const char**);
 
 /**
  * Destroys the internal variable, but doesn't try to free the LacoState
@@ -31,6 +33,6 @@ void laco_initLacoState(struct LacoState*, int, const char**);
  *
  * return 1 if pointer isn't NULL
  */
-int laco_destroyLacoState(struct LacoState*);
+int laco_destroyLacoState(LacoState*);
 
 #endif /* __LACO_H */
