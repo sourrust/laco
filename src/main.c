@@ -2,7 +2,7 @@
 #include "util.h"
 
 int main(int argc, const char** argv) {
-  struct LacoState state;
+  LacoState state;
   laco_initLacoState(&state, argc, argv);
 
   while(laco_loadline(&state) != -1) {
