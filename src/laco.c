@@ -10,8 +10,6 @@
 #include <lualib.h>
 #include <lauxlib.h>
 
-typedef struct LacoState LacoState;
-
 void laco_initLacoState(LacoState* state, int argc, const char** argv) {
   state->version = LACO_VERSION;
   state->argc    = argc;

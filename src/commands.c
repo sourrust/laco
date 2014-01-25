@@ -6,8 +6,6 @@
 #include "laco.h"
 #include "util.h"
 
-typedef struct LacoState LacoState;
-
 /* Check if the command flag is for version */
 static int isVersion(const char* arg) {
   int shorthand  = strcmp(arg, "-v") == 0;
