@@ -14,6 +14,8 @@ struct LacoState {
   int status;
 };
 
+typedef struct LacoState LacoState;
+
 /**
  * Initilazation of laco's state
  *
