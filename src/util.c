@@ -86,7 +86,7 @@ static bool pushline(lua_State* L, bool isFirstLine) {
 
 /* External API */
 
-int laco_loadline(LacoState* state) {
+int laco_loadline(struct LacoState* state) {
   int status = state->status;
   lua_State* L = state->L;
 
@@ -113,7 +113,7 @@ int laco_loadline(LacoState* state) {
   return status;
 }
 
-void laco_handleline(LacoState* state) {
+void laco_handleline(struct LacoState* state) {
   int status = state->status;
   lua_State* L = state->L;
 
