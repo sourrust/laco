@@ -60,3 +60,41 @@ int laco_destroyLacoState(LacoState* state) {
 
   return result;
 }
+
+struct lua_State* laco_getLacoLuaState(struct LacoState* state) {
+  struct lua_State* result;
+
+  result = (state == NULL) ? NULL : state->L;
+
+  return result;
+}
+
+const char* laco_getLacoVersion(struct LacoState* state) {
+  const char* result;
+
+  result = (state == NULL) ? NULL : state->version;
+
+  return result;
+}
+
+const char** laco_getLacoArgs(struct LacoState* state) {
+  const char** result;
+
+  result = (state == NULL) ? NULL : state->argv;
+
+  return result;
+}
+
+int laco_getLacoStatus(struct LacoState* state) {
+  int result;
+
+  result = (state == NULL) ? -1 : state->status;
+
+  return result;
+}
+
+void laco_setLacoStatus(struct LacoState* state, int status) {
+  if(state == NULL) return;
+
+  state->status = status;
+}
