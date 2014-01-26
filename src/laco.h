@@ -7,11 +7,12 @@ struct lua_State;
 struct LacoState;
 
 /**
- * Initilazation of laco's state
+ * Makes a new LacoState.
  *
- * param          pointer to LacoState
  * param          argument count (argc)
  * param          arguments      (argv)
+ *
+ * return a pointer to new LacoState.
  */
 struct LacoState* laco_newLacoState(int, const char**);
 
