@@ -132,7 +132,7 @@ void laco_handleline(struct LacoState* state) {
   laco_setLacoStatus(state, status);
 }
 
-void laco_kill(LacoState* state, int status, const char* message) {
+void laco_kill(struct LacoState* state, int status, const char* message) {
   laco_destroyLacoState(state);
 
   if(message != NULL) {
