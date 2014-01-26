@@ -24,27 +24,27 @@ static int isHelp(const char* arg) {
 }
 
 /* Print off the current version of laco */
-static void printVersion(LacoState* state) {
-  const char* version = state->version;
+static void printVersion(struct LacoState* laco) {
+  const char* version = laco_getLacoVersion(laco);
 
   printf("laco version %s\n", version);
-  laco_kill(state, 0, NULL);
+  laco_kill(laco, 0, NULL);
 }
 
 /* Print off the help screen */
-static void printHelp(LacoState* state) {
+static void printHelp(struct LacoState* laco) {
   puts("A better REPL for Lua.\n");
   puts("Usage: laco [options]\n");
   puts("-h | -? | --help   \tPrint this help screen");
   puts("-v | --version     \tPrint current version");
 
-  laco_kill(state, 0, NULL);
+  laco_kill(laco, 0, NULL);
 }
 
 /* External API */
 
-void laco_handleFlag(LacoState* state) {
-  const char* arg = state->argv[1];
+void laco_handleFlag(struct LacoState* laco) {
+  const char* arg = laco_getLacoArgs(laco)[1];
   if(arg == NULL) return;
 
   char argtype;
@@ -56,9 +56,9 @@ void laco_handleFlag(LacoState* state) {
 
   switch(argtype) {
     case 'v':
-      printVersion(state);
+      printVersion(laco);
     case 'h':
-      printHelp(state);
+      printHelp(laco);
     default:
       break;
   }
