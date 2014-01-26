@@ -87,8 +87,8 @@ static bool pushline(lua_State* L, bool isFirstLine) {
 /* External API */
 
 int laco_loadline(struct LacoState* state) {
-  int status = state->status;
-  lua_State* L = state->L;
+  int status   = laco_getLacoStatus(state);
+  lua_State* L = laco_getLacoLuaState(state);
 
   lua_settop(L, 0);
 
@@ -108,14 +108,14 @@ int laco_loadline(struct LacoState* state) {
     lua_concat(L, 3);
   }
   lua_remove(L, 1);
-  state->status = status;
+  laco_setLacoStatus(state, status);
 
   return status;
 }
 
 void laco_handleline(struct LacoState* state) {
-  int status = state->status;
-  lua_State* L = state->L;
+  int status   = laco_getLacoStatus(state);
+  lua_State* L = laco_getLacoLuaState(state);
 
   if(status == 0) {
     status = lua_pcall(L, 0, LUA_MULTRET, 0);
@@ -129,7 +129,7 @@ void laco_handleline(struct LacoState* state) {
     laco_reportError(L, status);
   }
 
-  state->status = status;
+  laco_setLacoStatus(state, status);
 }
 
 void laco_kill(LacoState* state, int status, const char* message) {

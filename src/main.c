@@ -2,13 +2,12 @@
 #include "util.h"
 
 int main(int argc, const char** argv) {
-  LacoState state;
-  laco_initLacoState(&state, argc, argv);
+  struct LacoState* state = laco_newLacoState(argc, argv);
 
-  while(laco_loadline(&state) != -1) {
-    laco_handleline(&state);
+  while(laco_loadline(state) != -1) {
+    laco_handleline(state);
   }
 
-  laco_destroyLacoState(&state);
+  laco_destroyLacoState(state);
   return 0;
 }
