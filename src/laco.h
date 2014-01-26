@@ -4,17 +4,7 @@
 struct lua_State;
 
 /* State of laco REPL */
-struct LacoState {
-  struct lua_State* L;
-  const char* version;
-
-  int argc;
-  const char** argv;
-
-  int status;
-};
-
-typedef struct LacoState LacoState;
+struct LacoState;
 
 /**
  * Initilazation of laco's state
