@@ -51,6 +51,8 @@ int laco_destroyLacoState(LacoState* state) {
     if(state->L != NULL) {
       lua_close(state->L);
     }
+    free(state);
+
     result = 1;
   } else {
     result = 0;
