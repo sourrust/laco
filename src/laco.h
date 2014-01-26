@@ -13,7 +13,7 @@ struct LacoState;
  * param          argument count (argc)
  * param          arguments      (argv)
  */
-void laco_initLacoState(LacoState*, int, const char**);
+struct LacoState* laco_newLacoState(int, const char**);
 
 /**
  * Destroys the internal variable, but doesn't try to free the LacoState

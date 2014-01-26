@@ -22,7 +22,9 @@ struct LacoState {
 
 typedef struct LacoState LacoState;
 
-void laco_initLacoState(LacoState* state, int argc, const char** argv) {
+LacoState* laco_newLacoState(int argc, const char** argv) {
+  LacoState* state = malloc(sizeof(LacoState));
+
   state->version = LACO_VERSION;
   state->argc    = argc;
   state->argv    = argv;
@@ -38,6 +40,8 @@ void laco_initLacoState(LacoState* state, int argc, const char** argv) {
   }
 
   luaL_openlibs(state->L);
+
+  return state;
 }
 
 int laco_destroyLacoState(LacoState* state) {
