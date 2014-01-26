@@ -11,7 +11,7 @@
 #include <lauxlib.h>
 
 struct LacoState {
-  struct lua_State* L;
+  struct lua_State* state;
   const char* version;
 
   int argc;
@@ -28,7 +28,7 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
   state->version = LACO_VERSION;
   state->argc    = argc;
   state->argv    = argv;
-  state->L       = luaL_newstate();
+  state->state   = luaL_newstate();
   state->status  = 0;
 
   if(state->L == NULL) {
@@ -39,7 +39,7 @@ LacoState* laco_newLacoState(int argc, const char** argv) {
     laco_handleFlag(state);
   }
 
-  luaL_openlibs(state->L);
+  luaL_openlibs(state->state);
 
   return state;
 }
@@ -48,8 +48,8 @@ int laco_destroyLacoState(LacoState* state) {
   int result;
 
   if(state != NULL) {
-    if(state->L != NULL) {
-      lua_close(state->L);
+    if(state->state != NULL) {
+      lua_close(state->state);
     }
     free(state);
 
@@ -64,7 +64,7 @@ int laco_destroyLacoState(LacoState* state) {
 struct lua_State* laco_getLacoLuaState(struct LacoState* state) {
   struct lua_State* result;
 
-  result = (state == NULL) ? NULL : state->L;
+  result = (state == NULL) ? NULL : state->state;
 
   return result;
 }
