@@ -36,7 +36,7 @@ else()
   find_package(Lua51 REQUIRED)
 
   include_directories(${LUA_INCLUDE_DIR})
-  set(LACO_LUA ${LUA_LIBRARIES})
+  set(LACO_LUA ${LUA_LIBRARY})
 
   set(LACO_LUA_USED "lua")
 endif()
