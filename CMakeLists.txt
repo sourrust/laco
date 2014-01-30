@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 project(laco)
 
 set(EXECUTABLE_OUTPUT_PATH "${laco_BINARY_DIR}/bin")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+  "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 set(LACO_VERSION_STRING "0.1.4")
 execute_process(COMMAND "date" "+%a %b %d, %Y %T"
