@@ -4,7 +4,7 @@
 struct lua_State;
 
 /* State of laco REPL */
-struct LacoState;
+typedef struct LacoState LacoState;
 
 /**
  * Makes a new LacoState.

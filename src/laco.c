@@ -20,8 +20,6 @@ struct LacoState {
   int status;
 };
 
-typedef struct LacoState LacoState;
-
 LacoState* laco_newLacoState(int argc, const char** argv) {
   LacoState* laco = malloc(sizeof(LacoState));
 
