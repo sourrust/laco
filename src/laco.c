@@ -59,7 +59,7 @@ int laco_destroyLacoState(LacoState* laco) {
   return result;
 }
 
-struct lua_State* laco_getLacoLuaState(struct LacoState* laco) {
+struct lua_State* laco_getLacoLuaState(LacoState* laco) {
   struct lua_State* result;
 
   result = (laco == NULL) ? NULL : laco->state;
@@ -67,7 +67,7 @@ struct lua_State* laco_getLacoLuaState(struct LacoState* laco) {
   return result;
 }
 
-const char* laco_getLacoVersion(struct LacoState* laco) {
+const char* laco_getLacoVersion(LacoState* laco) {
   const char* result;
 
   result = (laco == NULL) ? NULL : laco->version;
@@ -75,7 +75,7 @@ const char* laco_getLacoVersion(struct LacoState* laco) {
   return result;
 }
 
-const char** laco_getLacoArgs(struct LacoState* laco) {
+const char** laco_getLacoArgs(LacoState* laco) {
   const char** result;
 
   result = (laco == NULL) ? NULL : laco->argv;
@@ -83,7 +83,7 @@ const char** laco_getLacoArgs(struct LacoState* laco) {
   return result;
 }
 
-int laco_getLacoStatus(struct LacoState* laco) {
+int laco_getLacoStatus(LacoState* laco) {
   int result;
 
   result = (laco == NULL) ? -1 : laco->status;
@@ -91,7 +91,7 @@ int laco_getLacoStatus(struct LacoState* laco) {
   return result;
 }
 
-void laco_setLacoStatus(struct LacoState* laco, int status) {
+void laco_setLacoStatus(LacoState* laco, int status) {
   if(laco == NULL) return;
 
   laco->status = status;
