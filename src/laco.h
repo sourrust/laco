@@ -9,8 +9,8 @@ typedef struct LacoState LacoState;
 /**
  * Makes a new LacoState.
  *
- * param          argument count (argc)
- * param          arguments      (argv)
+ * param          argument count
+ * param          arguments
  *
  * return a pointer to new LacoState.
  */
