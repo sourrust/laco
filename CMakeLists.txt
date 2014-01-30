@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 project(laco)
 
 set(EXECUTABLE_OUTPUT_PATH "${laco_BINARY_DIR}/bin")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+  "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 set(LACO_VERSION_STRING "0.1.4")
 execute_process(COMMAND "date" "+%a %b %d, %Y %T"
@@ -24,16 +26,17 @@ if(LACO_USE_LUAJIT)
         "-pagezero_size 10000 -image_base 100000000")
   endif()
 
-  find_library(LACO_LUA luajit-5.1)
+  find_package(LuaJIT REQUIRED)
 
-  include_directories("/usr/local/include/luajit-2.0")
+  include_directories(${LUAJIT_INCLUDE_DIR})
+  set(LACO_LUA ${LUAJIT_LIBRARY})
 
   set(LACO_LUA_USED "luajit")
 else()
   find_package(Lua51 REQUIRED)
 
   include_directories(${LUA_INCLUDE_DIR})
-  set(LACO_LUA ${LUA_LIBRARIES})
+  set(LACO_LUA ${LUA_LIBRARY})
 
   set(LACO_LUA_USED "lua")
 endif()
