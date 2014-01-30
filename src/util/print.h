@@ -11,7 +11,7 @@ struct lua_State;
  *
  * return LUA_ERRSYNTAX if the value has some error
  */
-int laco_printtype(struct lua_State*);
+int laco_printtype(struct lua_State* L);
 
 
 /**
@@ -20,6 +20,6 @@ int laco_printtype(struct lua_State*);
  * param          pointer to lua_State
  * param          incoming lua stack status
  */
-void laco_reportError(struct lua_State*, int);
+void laco_reportError(struct lua_State* L, int status);
 
 #endif /* __PRINT_H */
