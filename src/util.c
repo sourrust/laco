@@ -86,7 +86,7 @@ static bool pushline(lua_State* L, bool isFirstLine) {
 
 /* External API */
 
-int laco_loadline(struct LacoState* laco) {
+int laco_loadline(LacoState* laco) {
   int status   = laco_getLacoStatus(laco);
   lua_State* L = laco_getLacoLuaState(laco);
 
@@ -113,7 +113,7 @@ int laco_loadline(struct LacoState* laco) {
   return status;
 }
 
-void laco_handleline(struct LacoState* laco) {
+void laco_handleline(LacoState* laco) {
   int status   = laco_getLacoStatus(laco);
   lua_State* L = laco_getLacoLuaState(laco);
 
@@ -132,7 +132,7 @@ void laco_handleline(struct LacoState* laco) {
   laco_setLacoStatus(laco, status);
 }
 
-void laco_kill(struct LacoState* laco, int status, const char* message) {
+void laco_kill(LacoState* laco, int status, const char* message) {
   laco_destroyLacoState(laco);
 
   if(message != NULL) {
