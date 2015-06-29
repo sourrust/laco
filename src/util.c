@@ -67,6 +67,24 @@ static bool isPrintable(lua_State* L, int status) {
   return result;
 }
 
+static char* getLine(LacoState* laco, const char* prompt) {
+  char* line   = linenoise(prompt);
+  char* offset = NULL;
+
+  if(line != NULL && line[0] == ':') {
+    offset = line + 1;
+
+    if(strcmp(offset, "quit") == 0) {
+      laco_kill(laco, 0, "Exiting laco...");
+    } else {
+      /* Make it seem like this was an empty line */
+      line[0] = '\0';
+    }
+  }
+
+  return line;
+}
+
 /* Push a line to the stack and store in history */
 static bool pushline(LacoState* laco, bool isFirstLine) {
   const char* prompt = (isFirstLine) ? "> " : "... ";
