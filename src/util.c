@@ -68,9 +68,9 @@ static bool isPrintable(lua_State* L, int status) {
 }
 
 /* Push a line to the stack and store in history */
-static bool pushline(lua_State* L, bool isFirstLine) {
-  char* line = NULL;
+static bool pushline(LacoState* laco, bool isFirstLine) {
   const char* prompt = (isFirstLine) ? "> " : "... ";
+  lua_State* L = laco_getLacoLuaState(laco);
   bool result = false;
 
   if((line = linenoise(prompt)) != NULL) {
@@ -92,7 +92,7 @@ int laco_loadline(LacoState* laco) {
 
   lua_settop(L, 0);
 
-  if(!pushline(L, true)) return -1;
+  if(!pushline(laco, true)) return -1;
 
   /* Until complete line */
   while(true) {
@@ -101,7 +101,7 @@ int laco_loadline(LacoState* laco) {
 
     if(isPrintable(L, status)) continue;
     if(!incomplete(L, status)) break;
-    if(!pushline(L, false)) return -1;
+    if(!pushline(laco, false)) return -1;
 
     lua_pushliteral(L, "\n");
     lua_insert(L, -2);
