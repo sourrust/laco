@@ -88,10 +88,11 @@ static char* getLine(LacoState* laco, const char* prompt) {
 /* Push a line to the stack and store in history */
 static bool pushline(LacoState* laco, bool isFirstLine) {
   const char* prompt = (isFirstLine) ? "> " : "... ";
+  char* line = getLine(laco, prompt);
   lua_State* L = laco_getLacoLuaState(laco);
   bool result = false;
 
-  if((line = linenoise(prompt)) != NULL) {
+  if(line != NULL) {
     lua_pushstring(L, line);
 
     linenoiseHistoryAdd(line);
