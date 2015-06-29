@@ -67,13 +67,32 @@ static bool isPrintable(lua_State* L, int status) {
   return result;
 }
 
+static char* getLine(LacoState* laco, const char* prompt) {
+  char* line   = linenoise(prompt);
+  char* offset = NULL;
+
+  if(line != NULL && line[0] == ':') {
+    offset = line + 1;
+
+    if(strcmp(offset, "quit") == 0) {
+      laco_kill(laco, 0, "Exiting laco...");
+    } else {
+      /* Make it seem like this was an empty line */
+      line[0] = '\0';
+    }
+  }
+
+  return line;
+}
+
 /* Push a line to the stack and store in history */
-static bool pushline(lua_State* L, bool isFirstLine) {
-  char* line = NULL;
+static bool pushline(LacoState* laco, bool isFirstLine) {
   const char* prompt = (isFirstLine) ? "> " : "... ";
+  char* line = getLine(laco, prompt);
+  lua_State* L = laco_getLacoLuaState(laco);
   bool result = false;
 
-  if((line = linenoise(prompt)) != NULL) {
+  if(line != NULL) {
     lua_pushstring(L, line);
 
     linenoiseHistoryAdd(line);
@@ -92,7 +111,7 @@ int laco_loadline(LacoState* laco) {
 
   lua_settop(L, 0);
 
-  if(!pushline(L, true)) return -1;
+  if(!pushline(laco, true)) return -1;
 
   /* Until complete line */
   while(true) {
@@ -101,7 +120,7 @@ int laco_loadline(LacoState* laco) {
 
     if(isPrintable(L, status)) continue;
     if(!incomplete(L, status)) break;
-    if(!pushline(L, false)) return -1;
+    if(!pushline(laco, false)) return -1;
 
     lua_pushliteral(L, "\n");
     lua_insert(L, -2);
