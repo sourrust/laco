@@ -13,7 +13,7 @@ struct LacoState;
 int laco_load_line(struct LacoState* laco);
 
 /**
- * Called after laco_loadline, this evaluated the line as a function and
+ * Called after laco_load_line, this evaluated the line as a function and
  * hands of the result for printing
  *
  * param          pointer to LacoState
