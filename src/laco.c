@@ -60,39 +60,23 @@ int laco_destroy_laco_state(LacoState* laco) {
 }
 
 struct lua_State* laco_get_laco_lua_state(LacoState* laco) {
-  struct lua_State* result;
-
-  result = (laco == NULL) ? NULL : laco->state;
-
-  return result;
+  return (laco == NULL) ? NULL : laco->state;
 }
 
 const char* laco_get_laco_version(LacoState* laco) {
-  const char* result;
-
-  result = (laco == NULL) ? NULL : laco->version;
-
-  return result;
+  return (laco == NULL) ? NULL : laco->version;
 }
 
 const char** laco_get_laco_args(LacoState* laco) {
-  const char** result;
-
-  result = (laco == NULL) ? NULL : laco->argv;
-
-  return result;
+  return (laco == NULL) ? NULL : laco->argv;
 }
 
 int laco_get_laco_status(LacoState* laco) {
-  int result;
-
-  result = (laco == NULL) ? -1 : laco->status;
-
-  return result;
+  return (laco == NULL) ? -1 : laco->status;
 }
 
 void laco_set_laco_status(LacoState* laco, int status) {
-  if(laco == NULL) return;
-
-  laco->status = status;
+  if(laco != NULL) {
+    laco->status = status;
+  }
 }
