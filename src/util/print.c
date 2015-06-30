@@ -50,6 +50,7 @@ static void print_table(lua_State* L) {
   /* check to see if table is empty */
   size_t table_size = lua_objlen(L, -2);
   int has_elements  = lua_next(L, -2);
+
   if(table_size == 0 && has_elements == 0) {
     printf("{ ");
   } else {
@@ -78,7 +79,7 @@ static void print_table(lua_State* L) {
 /* External API*/
 
 int laco_print_type(lua_State* L) {
-  int status = 0;
+  int status  = 0;
   int luatype = lua_type(L, -1);
 
   if(luatype != LUA_TTABLE) {

@@ -38,8 +38,9 @@ static bool is_printable(lua_State* L, int status) {
   if(status == LUA_ERRSYNTAX) {
     const char* mess = lua_tostring(L, -1);
 
-    bool is_literal = strstr(mess,  "unexpected symbol") != NULL;
+    bool is_literal  = strstr(mess,  "unexpected symbol") != NULL;
     bool is_variable = strstr(mess, "'=' expected") != NULL;
+
     if(is_literal || is_variable) {
       /* pop off error message */
       lua_pop(L, 1);
@@ -56,6 +57,7 @@ static bool is_printable(lua_State* L, int status) {
 
     /* check for a return statement */
     bool is_assignment = strstr(func, "=");
+
     if(!strstr(func, "return ") && !is_assignment) {
       lua_pop(L, 2);
       lua_pushfstring(L, "return %s", func);
@@ -88,9 +90,9 @@ static char* get_line(LacoState* laco, const char* prompt) {
 /* Push a line to the stack and store in history */
 static bool pushline(LacoState* laco, bool isFirstLine) {
   const char* prompt = (isFirstLine) ? "> " : "... ";
-  char* line = get_line(laco, prompt);
-  lua_State* L = laco_get_laco_lua_state(laco);
-  bool result = false;
+  char* line         = get_line(laco, prompt);
+  lua_State* L       = laco_get_laco_lua_state(laco);
+  bool result        = false;
 
   if(line != NULL) {
     lua_pushstring(L, line);
