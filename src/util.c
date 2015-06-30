@@ -20,8 +20,8 @@ static bool incomplete(lua_State* L, int status) {
     const char* mess = lua_tolstring(L, -1, &lmess);
 
     /* Check if the error ends in '<eof>' */
-    size_t eofsize = sizeof(LUA_QL("<eof>")) - 1;
-    const char* mess_end = mess + lmess - eofsize;
+    size_t eof_size = sizeof(LUA_QL("<eof>")) - 1;
+    const char* mess_end = mess + lmess - eof_size;
     if(strstr(mess, LUA_QL("<eof>")) == mess_end) {
       lua_pop(L, 1);
       result = true;
@@ -32,15 +32,15 @@ static bool incomplete(lua_State* L, int status) {
 }
 
 /* Check if line can be printed */
-static bool isPrintable(lua_State* L, int status) {
+static bool is_printable(lua_State* L, int status) {
   bool result = false;
 
   if(status == LUA_ERRSYNTAX) {
     const char* mess = lua_tostring(L, -1);
 
-    bool isLiteral = strstr(mess,  "unexpected symbol") != NULL;
-    bool isVariable = strstr(mess, "'=' expected") != NULL;
-    if(isLiteral || isVariable) {
+    bool is_literal = strstr(mess,  "unexpected symbol") != NULL;
+    bool is_variable = strstr(mess, "'=' expected") != NULL;
+    if(is_literal || is_variable) {
       /* pop off error message */
       lua_pop(L, 1);
 
@@ -55,8 +55,8 @@ static bool isPrintable(lua_State* L, int status) {
     const char* func = lua_tostring(L, -2);
 
     /* check for a return statement */
-    bool isAssignment = strstr(func, "=");
-    if(!strstr(func, "return ") && !isAssignment) {
+    bool is_assignment = strstr(func, "=");
+    if(!strstr(func, "return ") && !is_assignment) {
       lua_pop(L, 2);
       lua_pushfstring(L, "return %s", func);
 
@@ -67,7 +67,7 @@ static bool isPrintable(lua_State* L, int status) {
   return result;
 }
 
-static char* getLine(LacoState* laco, const char* prompt) {
+static char* get_line(LacoState* laco, const char* prompt) {
   char* line   = linenoise(prompt);
   char* offset = NULL;
 
@@ -88,8 +88,8 @@ static char* getLine(LacoState* laco, const char* prompt) {
 /* Push a line to the stack and store in history */
 static bool pushline(LacoState* laco, bool isFirstLine) {
   const char* prompt = (isFirstLine) ? "> " : "... ";
-  char* line = getLine(laco, prompt);
-  lua_State* L = laco_getLacoLuaState(laco);
+  char* line = get_line(laco, prompt);
+  lua_State* L = laco_get_laco_lua_state(laco);
   bool result = false;
 
   if(line != NULL) {
@@ -105,9 +105,9 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
 
 /* External API */
 
-int laco_loadline(LacoState* laco) {
-  int status   = laco_getLacoStatus(laco);
-  lua_State* L = laco_getLacoLuaState(laco);
+int laco_load_line(LacoState* laco) {
+  int status   = laco_get_laco_status(laco);
+  lua_State* L = laco_get_laco_lua_state(laco);
 
   lua_settop(L, 0);
 
@@ -118,7 +118,7 @@ int laco_loadline(LacoState* laco) {
     status = luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1),
                              "=stdin");
 
-    if(isPrintable(L, status)) continue;
+    if(is_printable(L, status)) continue;
     if(!incomplete(L, status)) break;
     if(!pushline(laco, false)) return -1;
 
@@ -127,32 +127,32 @@ int laco_loadline(LacoState* laco) {
     lua_concat(L, 3);
   }
   lua_remove(L, 1);
-  laco_setLacoStatus(laco, status);
+  laco_set_laco_status(laco, status);
 
   return status;
 }
 
-void laco_handleline(LacoState* laco) {
-  int status   = laco_getLacoStatus(laco);
-  lua_State* L = laco_getLacoLuaState(laco);
+void laco_handle_line(LacoState* laco) {
+  int status   = laco_get_laco_status(laco);
+  lua_State* L = laco_get_laco_lua_state(laco);
 
   if(status == 0) {
     status = lua_pcall(L, 0, LUA_MULTRET, 0);
   }
 
-  laco_reportError(L, status);
+  laco_report_error(L, status);
 
   if(status == 0 && lua_gettop(L) > 0) {
-    status = laco_printtype(L);
+    status = laco_print_type(L);
 
-    laco_reportError(L, status);
+    laco_report_error(L, status);
   }
 
-  laco_setLacoStatus(laco, status);
+  laco_set_laco_status(laco, status);
 }
 
 void laco_kill(LacoState* laco, int status, const char* message) {
-  laco_destroyLacoState(laco);
+  laco_destroy_laco_state(laco);
 
   if(message != NULL) {
     fprintf(stderr, "%s\n", message);

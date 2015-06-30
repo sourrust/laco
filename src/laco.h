@@ -14,7 +14,7 @@ typedef struct LacoState LacoState;
  *
  * return a pointer to new LacoState.
  */
-LacoState* laco_newLacoState(int argc, const char** argv);
+LacoState* laco_new_laco_state(int argc, const char** argv);
 
 /**
  * Destroys the internal variable, but doesn't try to free the LacoState
@@ -24,7 +24,7 @@ LacoState* laco_newLacoState(int argc, const char** argv);
  *
  * return 1 if pointer isn't NULL
  */
-int laco_destroyLacoState(LacoState* laco);
+int laco_destroy_laco_state(LacoState* laco);
 
 /**
  * Gets the lua state held with laco.
@@ -33,7 +33,7 @@ int laco_destroyLacoState(LacoState* laco);
  *
  * return a pointer to lua_State
  */
-struct lua_State* laco_getLacoLuaState(LacoState* laco);
+struct lua_State* laco_get_laco_lua_state(LacoState* laco);
 
 /**
  * Gets the laco version held with laco.
@@ -42,7 +42,7 @@ struct lua_State* laco_getLacoLuaState(LacoState* laco);
  *
  * return a string of characters representing laco's version number
  */
-const char* laco_getLacoVersion(LacoState* laco);
+const char* laco_get_laco_version(LacoState* laco);
 
 /**
  * Gets the arraying of arguments passed to laco.
@@ -51,7 +51,7 @@ const char* laco_getLacoVersion(LacoState* laco);
  *
  * return an array of characters string passes into laco
  */
-const char** laco_getLacoArgs(LacoState* laco);
+const char** laco_get_laco_args(LacoState* laco);
 
 /**
  * Get the current status of the laco repl.
@@ -60,7 +60,7 @@ const char** laco_getLacoArgs(LacoState* laco);
  *
  * return the current status of laco
  */
-int laco_getLacoStatus(LacoState* laco);
+int laco_get_laco_status(LacoState* laco);
 
 /**
  * Set the current status of laco.
@@ -68,6 +68,6 @@ int laco_getLacoStatus(LacoState* laco);
  * param          pointer to LacoState
  * param          status to be set
  */
-void laco_setLacoStatus(LacoState* laco, int status);
+void laco_set_laco_status(LacoState* laco, int status);
 
 #endif /* __LACO_H */

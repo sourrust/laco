@@ -6,7 +6,7 @@
 #include <lua.h>
 
 /* C Wrapper for lua's tostring function  */
-inline static const char* toLuaString(lua_State* L) {
+inline static const char* to_lua_string(lua_State* L) {
   const char* result = NULL;
 
   lua_getglobal(L, "tostring");
@@ -22,35 +22,35 @@ inline static const char* toLuaString(lua_State* L) {
 }
 
 /* Format printing of a single key value pair */
-static void printKeyValue(lua_State* L, char startchar) {
+static void print_key_value(lua_State* L, char start_char) {
   printf("%c %s = %s\n",
-      startchar, lua_tostring(L, -2),
-      toLuaString(L));
+      start_char, lua_tostring(L, -2),
+      to_lua_string(L));
 }
 
 /* Format printing of a single list element */
-static void printList(lua_State* L, char startchar) {
+static void print_list(lua_State* L, char start_char) {
   const char* format = NULL;
-  if(startchar == '{') {
+  if(start_char == '{') {
     format = "%c%s";
   } else {
     format = "%c %s";
   }
-  printf(format, startchar, toLuaString(L));
+  printf(format, start_char, to_lua_string(L));
 }
 
 
 /* Print both types of tables */
-static void printTable(lua_State* L) {
-  bool firstelem = true;
+static void print_table(lua_State* L) {
+  bool first_elem = true;
   int luatype;
 
   lua_pushnil(L);
 
   /* check to see if table is empty */
-  size_t tablesize = lua_objlen(L, -2);
-  int hasElements  = lua_next(L, -2);
-  if(tablesize == 0 && hasElements == 0) {
+  size_t table_size = lua_objlen(L, -2);
+  int has_elements  = lua_next(L, -2);
+  if(table_size == 0 && has_elements == 0) {
     printf("{ ");
   } else {
     do {
@@ -62,11 +62,11 @@ static void printTable(lua_State* L) {
        * tables and index value tables.
        */
       if(luatype == LUA_TSTRING) {
-        printKeyValue(L, (firstelem) ? '{' : ',');
-        firstelem = false;
+        print_key_value(L, (first_elem) ? '{' : ',');
+        first_elem = false;
       } else {
-        printList(L, (firstelem) ? '{' : ',');
-        firstelem = false;
+        print_list(L, (first_elem) ? '{' : ',');
+        first_elem = false;
       }
       lua_pop(L, 1);
     } while(lua_next(L, -2) != 0);
@@ -77,7 +77,7 @@ static void printTable(lua_State* L) {
 
 /* External API*/
 
-int laco_printtype(lua_State* L) {
+int laco_print_type(lua_State* L) {
   int status = 0;
   int luatype = lua_type(L, -1);
 
@@ -87,13 +87,13 @@ int laco_printtype(lua_State* L) {
 
     status = lua_pcall(L, lua_gettop(L) - 1, 0, 0);
   } else {
-    printTable(L);
+    print_table(L);
   }
 
   return status;
 }
 
-void laco_reportError(lua_State* L, int status) {
+void laco_report_error(lua_State* L, int status) {
   if(status != 0 && lua_isstring(L, -1)) {
     fprintf(stderr, "%s\n", lua_tostring(L, -1));
     fflush(stderr);

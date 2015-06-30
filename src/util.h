@@ -10,7 +10,7 @@ struct LacoState;
  *
  * return -1 if there is no line input to load
  */
-int laco_loadline(struct LacoState* laco);
+int laco_load_line(struct LacoState* laco);
 
 /**
  * Called after laco_loadline, this evaluated the line as a function and
@@ -18,7 +18,7 @@ int laco_loadline(struct LacoState* laco);
  *
  * param          pointer to LacoState
  */
-void laco_handleline(struct LacoState* laco);
+void laco_handle_line(struct LacoState* laco);
 
 /**
  * Kills the loop with exiting message if specified

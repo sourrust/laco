@@ -9,6 +9,6 @@ struct LacoState;
  *
  * param          pointer to LacoState
  */
-void laco_handleFlag(struct LacoState* laco);
+void laco_handle_flag(struct LacoState* laco);
 
 #endif /* __COMMANDS_H */
