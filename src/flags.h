@@ -1,5 +1,5 @@
-#ifndef __COMMANDS_H
-#define __COMMANDS_H
+#ifndef __FLAGS_H
+#define __FLAGS_H
 
 struct LacoState;
 
@@ -11,4 +11,4 @@ struct LacoState;
  */
 void laco_handle_flag(struct LacoState* laco);
 
-#endif /* __COMMANDS_H */
+#endif /* __FLAGS_H */

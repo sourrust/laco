@@ -1,10 +1,15 @@
-#include "commands.h"
+#include "flags.h"
 
 #include <stdio.h>
 #include <string.h>
 
 #include "laco.h"
 #include "util.h"
+
+enum LacoFlags {
+  LACO_HELP,
+  LACO_VERSION
+};
 
 /* Check if the command flag is for version */
 static int is_version(const char* arg) {
@@ -44,20 +49,20 @@ static void print_help(LacoState* laco) {
 /* External API */
 
 void laco_handle_flag(LacoState* laco) {
+  int arg_type;
   const char* arg = laco_get_laco_args(laco)[1];
   if(arg == NULL) return;
 
-  char arg_type;
   if(is_version(arg)) {
-    arg_type = 'v';
+    arg_type = LACO_VERSION;
   } else if(is_help(arg)) {
-    arg_type = 'h';
+    arg_type = LACO_HELP;
   }
 
   switch(arg_type) {
-    case 'v':
+    case LACO_VERSION:
       print_version(laco);
-    case 'h':
+    case LACO_HELP:
       print_help(laco);
     default:
       break;

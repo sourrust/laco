@@ -1,7 +1,7 @@
 #include "laco.h"
 
 #include "lacoconf.h"
-#include "commands.h"
+#include "flags.h"
 #include "util.h"
 
 #include <stdlib.h>
