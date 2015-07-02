@@ -1,4 +1,4 @@
-#include "commands.h"
+#include "flags.h"
 
 #include <stdio.h>
 #include <string.h>
