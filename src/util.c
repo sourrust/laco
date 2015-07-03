@@ -8,6 +8,7 @@
 #include <lauxlib.h>
 
 #include "linenoise.h"
+#include "commands.h"
 #include "laco.h"
 #include "util/print.h"
 
@@ -70,18 +71,10 @@ static bool is_printable(lua_State* L, int status) {
 }
 
 static char* get_line(LacoState* laco, const char* prompt) {
-  char* line   = linenoise(prompt);
-  char* offset = NULL;
+  char* line = linenoise(prompt);
 
   if(line != NULL && line[0] == ':') {
-    offset = line + 1;
-
-    if(strcmp(offset, "quit") == 0) {
-      laco_kill(laco, 0, "Exiting laco...");
-    } else {
-      /* Make it seem like this was an empty line */
-      line[0] = '\0';
-    }
+    handle_command(laco, line);
   }
 
   return line;
