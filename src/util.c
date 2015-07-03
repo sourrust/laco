@@ -158,3 +158,16 @@ void laco_kill(LacoState* laco, int status, const char* message) {
 
   exit(status);
 }
+
+int laco_is_match(const char** matches, const char* test_string) {
+  int i;
+  char* match;
+
+  for(i = 0; (match = (char*) matches[i]); i++) {
+    if(strcmp(test_string, match) == 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
