@@ -29,4 +29,6 @@ void laco_handle_line(struct LacoState* laco);
  */
 void laco_kill(struct LacoState* laco, int status, const char* message);
 
+int laco_is_match(const char** matches, const char* test_string);
+
 #endif /* __UTIL_H */
