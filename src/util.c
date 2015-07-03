@@ -73,8 +73,12 @@ static bool is_printable(lua_State* L, int status) {
 static char* get_line(LacoState* laco, const char* prompt) {
   char* line = linenoise(prompt);
 
-  if(line != NULL && line[0] == ':') {
-    handle_command(laco, line);
+  if(line != NULL) {
+    linenoiseHistoryAdd(line);
+
+    if(line[0] == ':') {
+      handle_command(laco, line);
+    }
   }
 
   return line;
@@ -90,7 +94,6 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
   if(line != NULL) {
     lua_pushstring(L, line);
 
-    linenoiseHistoryAdd(line);
     free(line);
     result = true;
   }
