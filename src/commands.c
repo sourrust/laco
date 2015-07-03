@@ -19,9 +19,9 @@ void handle_command(struct LacoState* laco, char* line) {
       laco_kill(laco, 0, "Exiting laco...");
     } else if(strcmp(command, "help") == 0)  {
       print_commands_help();
-    } else {
-      /* Make it seem like this was an empty line */
-      line[0] = '\0';
     }
+
+    /* Make it seem like this was an empty line */
+    line[0] = '\0';
   }
 }
