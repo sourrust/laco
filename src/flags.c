@@ -1,7 +1,7 @@
 #include "flags.h"
 
+#include <stdbool.h>
 #include <stdio.h>
-#include <string.h>
 
 #include "laco.h"
 #include "util.h"
@@ -11,21 +11,17 @@ enum LacoFlags {
   LACO_VERSION
 };
 
-/* Check if the command flag is for version */
-static int is_version(const char* arg) {
-  int short_hand  = strcmp(arg, "-v") == 0;
-  int normal_hand = strcmp(arg, "--version") == 0;
+static const char* version_matches[] = {"-v", "--version"};
+static const char* help_matches[]    = {"-h", "-?", "--help"};
 
-  return short_hand || normal_hand;
+/* Check if the command flag is for version */
+static inline bool is_version(const char* arg) {
+  return laco_is_match(version_matches, arg);
 }
 
 /* Check if the command flag is for help */
-static int is_help(const char* arg) {
-  int short_hand  = strcmp(arg, "-h") == 0
-                 || strcmp(arg, "-?") == 0;
-  int normal_hand = strcmp(arg, "--help") == 0;
-
-  return short_hand || normal_hand;
+static inline bool is_help(const char* arg) {
+  return laco_is_match(help_matches, arg);
 }
 
 /* Print off the current version of laco */
