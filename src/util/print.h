@@ -1,5 +1,5 @@
-#ifndef __PRINT_H
-#define __PRINT_H
+#ifndef LACO_PRINT_H
+#define LACO_PRINT_H
 
 struct lua_State;
 
@@ -22,4 +22,4 @@ int laco_print_type(struct lua_State* L);
  */
 void laco_report_error(struct lua_State* L, int status);
 
-#endif /* __PRINT_H */
+#endif /* LACO_PRINT_H */

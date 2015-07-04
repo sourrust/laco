@@ -1,5 +1,5 @@
-#ifndef __UTIL_H
-#define __UTIL_H
+#ifndef LACO_UTIL_H
+#define LACO_UTIL_H
 
 struct LacoState;
 
@@ -31,4 +31,4 @@ void laco_kill(struct LacoState* laco, int status, const char* message);
 
 int laco_is_match(const char** matches, const char* test_string);
 
-#endif /* __UTIL_H */
+#endif /* LACO_UTIL_H */

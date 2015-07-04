@@ -1,5 +1,5 @@
-#ifndef __LACO_H
-#define __LACO_H
+#ifndef LACO_H
+#define LACO_H
 
 struct lua_State;
 
@@ -70,4 +70,4 @@ int laco_get_laco_status(LacoState* laco);
  */
 void laco_set_laco_status(LacoState* laco, int status);
 
-#endif /* __LACO_H */
+#endif /* LACO_H */
