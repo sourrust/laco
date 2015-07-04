@@ -10,7 +10,6 @@
 #include "linenoise.h"
 #include "commands.h"
 #include "laco.h"
-#include "util/print.h"
 
 /* Check if line is incomplete */
 static bool incomplete(lua_State* L, int status) {
