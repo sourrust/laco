@@ -5,6 +5,8 @@
 
 #include <lua.h>
 
+#include "laco.h"
+
 /* C Wrapper for lua's tostring function  */
 inline static const char* to_lua_string(lua_State* L) {
   const char* result = NULL;
@@ -78,9 +80,10 @@ static void print_table(lua_State* L) {
 
 /* External API*/
 
-int laco_print_type(lua_State* L) {
-  int status  = 0;
-  int luatype = lua_type(L, -1);
+int laco_print_type(LacoState* laco) {
+  lua_State* L = laco_get_laco_lua_state(laco);
+  int status   = laco_get_laco_status(laco);
+  int luatype  = lua_type(L, -1);
 
   if(luatype != LUA_TTABLE) {
     lua_getglobal(L, "print");
@@ -91,10 +94,14 @@ int laco_print_type(lua_State* L) {
     print_table(L);
   }
 
+  laco_set_laco_status(laco, status);
+
   return status;
 }
 
-void laco_report_error(lua_State* L, int status) {
+void laco_report_error(LacoState* laco, int status) {
+  lua_State* L = laco_get_laco_lua_state(laco);
+
   if(status != 0 && lua_isstring(L, -1)) {
     fprintf(stderr, "%s\n", lua_tostring(L, -1));
     fflush(stderr);

@@ -137,12 +137,12 @@ void laco_handle_line(LacoState* laco) {
     status = lua_pcall(L, 0, LUA_MULTRET, 0);
   }
 
-  laco_report_error(L, status);
+  laco_report_error(laco, status);
 
   if(status == 0 && lua_gettop(L) > 0) {
-    status = laco_print_type(L);
+    status = laco_print_type(laco);
 
-    laco_report_error(L, status);
+    laco_report_error(laco, status);
   }
 
   laco_set_laco_status(laco, status);
