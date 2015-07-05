@@ -33,7 +33,7 @@ void laco_kill(struct LacoState* laco, int status, const char* message);
  * When there is a value on the lua stack, it will print out depending on
  * the type it is
  *
- * param          pointer to lua_State
+ * param          pointer to LacoState
  *
  * return LUA_ERRSYNTAX if the value has some error
  */
@@ -42,7 +42,7 @@ int laco_print_type(struct LacoState* laco);
 /**
  * Prints out and pops off errors pushed into the lua stack
  *
- * param          pointer to lua_State
+ * param          pointer to LacoState
  * param          incoming lua stack status
  */
 void laco_report_error(struct LacoState* laco, int status);
