@@ -2,7 +2,6 @@
 #define LACO_UTIL_H
 
 struct LacoState;
-struct lua_State;
 
 /**
  * Load a line into the lua stack to be evaluated later
@@ -38,8 +37,7 @@ void laco_kill(struct LacoState* laco, int status, const char* message);
  *
  * return LUA_ERRSYNTAX if the value has some error
  */
-int laco_print_type(struct lua_State* L);
-
+int laco_print_type(struct LacoState* laco);
 
 /**
  * Prints out and pops off errors pushed into the lua stack
@@ -47,7 +45,7 @@ int laco_print_type(struct lua_State* L);
  * param          pointer to lua_State
  * param          incoming lua stack status
  */
-void laco_report_error(struct lua_State* L, int status);
+void laco_report_error(struct LacoState* laco, int status);
 
 int laco_is_match(const char** matches, const char* test_string);
 
