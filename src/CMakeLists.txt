@@ -1,6 +1,6 @@
 set(DEPS_DIR "${laco_SOURCE_DIR}/deps")
 
-include_directories("${DEPS_DIR}/linenoise")
+include_directories("${laco_SOURCE_DIR}/src" "${DEPS_DIR}/linenoise")
 
 set(SOURCE ${DEPS_DIR}/linenoise/linenoise.c
            main.c util.c util/print.c
