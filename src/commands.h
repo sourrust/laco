@@ -3,6 +3,10 @@
 
 struct LacoState;
 
+/**
+ * Gets passed ever line to see if it matches one of the REPL command. If it
+ * does, that command will be executed.
+ */
 void handle_command(struct LacoState* laco, char* line);
 
 #endif /* LACO_COMMANDS_H */
