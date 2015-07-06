@@ -5,12 +5,12 @@
 
 #include "util.h"
 
-static const char* quit_matches[] = {"quit"};
+static const char* quit_matches[] = {"quit", "q"};
 static const char* help_matches[] = {"help", "?"};
 
 static void print_commands_help() {
   puts("  Commands available:\n");
-  puts("    :quit      \tExit laco");
+  puts("    :quit, :q  \tExit laco");
   puts("    :help, :?  \tDisplay this list of commands");
 }
 
