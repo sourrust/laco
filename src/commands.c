@@ -6,12 +6,12 @@
 #include "util.h"
 
 static const char* quit_matches[] = {"quit"};
-static const char* help_matches[] = {"help"};
+static const char* help_matches[] = {"help", "?"};
 
 static void print_commands_help() {
   puts("  Commands available:\n");
-  puts("    :quit   \tExit laco");
-  puts("    :help   \tDisplay this list of commands");
+  puts("    :quit      \tExit laco");
+  puts("    :help, :?  \tDisplay this list of commands");
 }
 
 static inline bool is_quit(const char* command) {
