@@ -4,46 +4,31 @@
 struct LacoState;
 
 /**
- * Load a line into the lua stack to be evaluated later
- *
- * param          pointer to LacoState
- *
- * return -1 if there is no line input to load
+ * Load a line into the lua stack to evaluated later. This function will
+ * return -1 if there is no line input to load.
  */
 int laco_load_line(struct LacoState* laco);
 
 /**
- * Called after laco_load_line, this evaluated the line as a function and
- * hands of the result for printing
- *
- * param          pointer to LacoState
+ * Called after laco_load_line, this will evalute the line as a function and
+ * hands off the result for printing.
  */
 void laco_handle_line(struct LacoState* laco);
 
 /**
- * Kills the loop with exiting message if specified
- *
- * param          pointer to LacoState
- * param          exit with status
- * param          error message
+ * Kills the loop with exiting message if specified.
  */
 void laco_kill(struct LacoState* laco, int status, const char* message);
 
 /**
- * When there is a value on the lua stack, it will print out depending on
- * the type it is
- *
- * param          pointer to LacoState
- *
- * return LUA_ERRSYNTAX if the value has some error
+ * When there is a value on the lua stack, this will print out the current
+ * type it is. When an error accures, laco_print_type will return
+ * LUA_ERRSYNTAX.
  */
 int laco_print_type(struct LacoState* laco);
 
 /**
- * Prints out and pops off errors pushed into the lua stack
- *
- * param          pointer to LacoState
- * param          incoming lua stack status
+ * Prints out and pops off errors pushed into the lua stack.
  */
 void laco_report_error(struct LacoState* laco, int status);
 
