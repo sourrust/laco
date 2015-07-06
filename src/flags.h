@@ -4,10 +4,8 @@
 struct LacoState;
 
 /**
- * Takes the arguments inside of LacoState and executed a flags
- * functionality
- *
- * param          pointer to LacoState
+ * Takes the arguments inside of LacoState and executed any of flags
+ * functionality when the arguments match.
  */
 void laco_handle_flag(struct LacoState* laco);
 
