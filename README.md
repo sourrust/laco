@@ -33,9 +33,8 @@ REPL is a read eval print loop, the name was born.
 
 ## Building
 
-Since laco depends on [linenoise](https://github.com/antirez/linenoise#tested-with),
-I don't think this will work for Windows terminals, but nevertheless,
-here are the step on building.
+Since laco depends on [linenoise][1], I don't think this will work for
+Windows terminals, but nevertheless, here are the step on building.
 
 **Denpendencies (not included):**
 
@@ -57,3 +56,5 @@ make
 ```
 
 The binary will be located in `build/bin` and it can be run from there.
+
+[1]: https://github.com/antirez/linenoise#tested-with
