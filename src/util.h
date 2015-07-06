@@ -10,8 +10,8 @@ struct LacoState;
 int laco_load_line(struct LacoState* laco);
 
 /**
- * Called after laco_load_line, this will evalute the line as a function and
- * hands off the result for printing.
+ * Called after laco_load_line, this will evaluate the line as a function
+ * and hands off the result for printing.
  */
 void laco_handle_line(struct LacoState* laco);
 
@@ -22,7 +22,7 @@ void laco_kill(struct LacoState* laco, int status, const char* message);
 
 /**
  * When there is a value on the lua stack, this will print out the current
- * type it is. When an error accures, laco_print_type will return
+ * type it is. When an error acquires, laco_print_type will return
  * LUA_ERRSYNTAX.
  */
 int laco_print_type(struct LacoState* laco);
