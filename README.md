@@ -20,6 +20,7 @@ well.
 ```
 
 * In memory history, so pressing up will go to the previous line.
+* Command mode (use `:help` to see the list of commands)
 
 This is still in early development so there isn't much so far, but I
 think its enough to use a replacement (atleast for luajit users).
