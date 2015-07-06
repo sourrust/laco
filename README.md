@@ -1,10 +1,11 @@
 # Laço
 
-A better REPL for lua. This was mainly for luajit because the default
-interactive mode, ie. the REPL, was pretty bad. You couldn't move back
-and forth in the to edit, and no going through history. With laco you
-can actually do that, and I also believe that that regular lua can as
-well.
+A better REPL for lua. This was created mainly for luajit because the
+default interactive mode, better known as the REPL, was pretty bare
+bones. You can't move left or right in the current line if wanted to
+edit the line, and there is no history for repeating commands easily.
+With laco you can actually do that, and I also believe that that regular
+lua REPL can as well.
 
 ## Features
 
