@@ -22,7 +22,7 @@ static inline bool is_help(const char* command) {
   return laco_is_match(help_matches, command);
 }
 
-void handle_command(struct LacoState* laco, char* line) {
+void laco_handle_command(struct LacoState* laco, char* line) {
   if(laco != NULL && line != NULL) {
     const char* command = line + 1;
 
