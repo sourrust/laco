@@ -76,7 +76,7 @@ static char* get_line(LacoState* laco, const char* prompt) {
     linenoiseHistoryAdd(line);
 
     if(line[0] == ':') {
-      handle_command(laco, line);
+      laco_handle_command(laco, line);
     }
   }
 
