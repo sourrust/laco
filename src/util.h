@@ -38,4 +38,6 @@ void laco_report_error(struct LacoState* laco, int status);
  */
 int laco_is_match(const char** matches, const char* test_string);
 
+char** laco_line_to_words(char* line);
+
 #endif /* LACO_UTIL_H */
