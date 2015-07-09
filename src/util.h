@@ -38,6 +38,10 @@ void laco_report_error(struct LacoState* laco, int status);
  */
 int laco_is_match(const char** matches, const char* test_string);
 
+/**
+ * Takes a line, seperated by spaces, and changes it into an array of the
+ * words that make up the line. The last value of this array will be NULL.
+ */
 char** laco_line_to_words(char* line);
 
 #endif /* LACO_UTIL_H */
