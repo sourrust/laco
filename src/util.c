@@ -100,6 +100,14 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
   return result;
 }
 
+static inline void ignore_extra_spaces(char** string_ptr) {
+  if(*string_ptr == NULL) return;
+
+  while(**string_ptr == ' ') {
+    *string_ptr += 1;
+  }
+}
+
 /* External API */
 
 int laco_load_line(LacoState* laco) {
@@ -169,4 +177,23 @@ int laco_is_match(const char** matches, const char* test_string) {
   }
 
   return false;
+}
+
+char** laco_line_to_words(char* line) {
+  if(line == NULL) return NULL;
+
+  char** result = calloc(16, sizeof(char*));
+  size_t i = 0;
+
+  while(1) {
+    result[i] = strsep(&line, " ");
+
+    if(result[i] == NULL) break;
+
+    ignore_extra_spaces(&line);
+
+    i += 1;
+  }
+
+  return result;
 }

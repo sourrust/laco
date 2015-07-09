@@ -4,6 +4,7 @@ include_directories("${laco_SOURCE_DIR}/src" "${DEPS_DIR}/linenoise")
 
 set(SOURCE ${DEPS_DIR}/linenoise/linenoise.c
            main.c util.c util/print.c
+           commands/debugger.c
            flags.c commands.c laco.c)
 
 add_executable(laco ${SOURCE})
