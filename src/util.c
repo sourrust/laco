@@ -100,10 +100,10 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
   return result;
 }
 
-static inline void ignore_extra_spaces(char** string_ptr) {
+static inline void ignore_extra(const char chr, char** string_ptr) {
   if(*string_ptr == NULL) return;
 
-  while(**string_ptr == ' ') {
+  while(**string_ptr == chr) {
     *string_ptr += 1;
   }
 }
@@ -179,7 +179,8 @@ int laco_is_match(const char** matches, const char* test_string) {
   return false;
 }
 
-char** laco_split_by(const char* split_with, char* string) {
+char** laco_split_by(const char* split_with, char* string,
+                     int ignore_repeats) {
   if(string == NULL) return NULL;
 
   char** result = calloc(16, sizeof(char*));
@@ -190,7 +191,7 @@ char** laco_split_by(const char* split_with, char* string) {
 
     if(result[i] == NULL) break;
 
-    ignore_extra_spaces(&string);
+    if(ignore_repeats) ignore_extra(split_with[0], &string);
 
     i += 1;
   }
