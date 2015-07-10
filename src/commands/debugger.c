@@ -9,8 +9,7 @@
 #include "laco.h"
 #include "util.h"
 
-void laco_print_debug_info(struct LacoState* laco,
-                           const char* function_name) {
+void laco_print_debug_info(LacoState* laco, const char* function_name) {
   int i;
   char* namespace;
   lua_State* L         = laco_get_laco_lua_state(laco);
