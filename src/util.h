@@ -44,4 +44,8 @@ int laco_is_match(const char** matches, const char* test_string);
  */
 char** laco_split_by(const char* split_with, char* string);
 
+/* Macro for splitting with spaces */
+#define laco_line_to_words(line) \
+  laco_split_by(" ", line)
+
 #endif /* LACO_UTIL_H */
