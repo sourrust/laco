@@ -39,9 +39,14 @@ void laco_report_error(struct LacoState* laco, int status);
 int laco_is_match(const char** matches, const char* test_string);
 
 /**
- * Takes a line, seperated by spaces, and changes it into an array of the
- * words that make up the line. The last value of this array will be NULL.
+ * Break the provided string into an array of strings that are between the
+ * split_with value. The last value of this array will be NULL.
  */
-char** laco_line_to_words(char* line);
+char** laco_split_by(const char* split_with, char* string,
+                     int ignore_repeats);
+
+/* Macro for splitting with spaces */
+#define laco_line_to_words(line) \
+  laco_split_by(" ", line, 1)
 
 #endif /* LACO_UTIL_H */

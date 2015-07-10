@@ -38,7 +38,7 @@ void laco_handle_command(struct LacoState* laco, char* line) {
     char* command_line   = strdup(line + 1);
     char** command_words = laco_line_to_words(command_line);
 
-    /* Alias for  */
+    /* Alias for parsed out words within the line */
     const char* command    = command_words[0];
     const char** arguments = (const char**) command_words + 1;
 
