@@ -179,18 +179,18 @@ int laco_is_match(const char** matches, const char* test_string) {
   return false;
 }
 
-char** laco_line_to_words(char* line) {
-  if(line == NULL) return NULL;
+char** laco_split_by(const char* split_with, char* string) {
+  if(string == NULL) return NULL;
 
   char** result = calloc(16, sizeof(char*));
   size_t i = 0;
 
   while(1) {
-    result[i] = strsep(&line, " ");
+    result[i] = strsep(&string, split_with);
 
     if(result[i] == NULL) break;
 
-    ignore_extra_spaces(&line);
+    ignore_extra_spaces(&string);
 
     i += 1;
   }
