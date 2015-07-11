@@ -9,8 +9,7 @@
 #include "laco.h"
 #include "util.h"
 
-void laco_print_debug_info(struct LacoState* laco,
-                           const char* function_name) {
+void laco_print_debug_info(LacoState* laco, const char* function_name) {
   int i;
   char* namespace;
   lua_State* L         = laco_get_laco_lua_state(laco);
@@ -23,7 +22,15 @@ void laco_print_debug_info(struct LacoState* laco,
   /* Walk down the namespace if there is something to go down */
   for(i = 0; (namespace = namespaces[i]); i++) {
     lua_getfield(L, index, namespace);
+
     index = lua_gettop(L);
+
+    if(lua_type(L, index) == LUA_TNIL) {
+      printf("Couldn't find the function named \"%s\"\n", function_name);
+      lua_pop(L, i + 1);
+
+      return;
+    }
   }
 
   lua_getinfo(L, ">Sl", &debug_info);
