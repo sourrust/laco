@@ -1,6 +1,8 @@
 #ifndef LACO_UTIL_H
 #define LACO_UTIL_H
 
+#include <stdbool.h>
+
 struct LacoState;
 
 /**
@@ -36,7 +38,7 @@ void laco_report_error(struct LacoState* laco, int status);
  * Checks if the test string matches any of the string in matches and
  * returns 1 if true, and 0 if false.
  */
-int laco_is_match(const char** matches, const char* test_string);
+bool laco_is_match(const char** matches, const char* test_string);
 
 /**
  * Break the provided string into an array of strings that are between the

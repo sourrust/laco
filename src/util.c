@@ -27,7 +27,7 @@ void laco_kill(LacoState* laco, int status, const char* message) {
   exit(status);
 }
 
-int laco_is_match(const char** matches, const char* test_string) {
+bool laco_is_match(const char** matches, const char* test_string) {
   int i;
   char* match;
 
