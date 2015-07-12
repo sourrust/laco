@@ -14,15 +14,20 @@
 
 /* Check if line is incomplete */
 static bool incomplete(lua_State* L, int status) {
+  size_t lmess;
+  size_t eof_size;
+  const char* mess;
+  const char* mess_end;
+
   bool result = false;
 
   if(status == LUA_ERRSYNTAX) {
-    size_t lmess;
-    const char* mess = lua_tolstring(L, -1, &lmess);
+    mess = lua_tolstring(L, -1, &lmess);
 
     /* Check if the error ends in '<eof>' */
-    size_t eof_size = sizeof(LUA_QL("<eof>")) - 1;
-    const char* mess_end = mess + lmess - eof_size;
+    eof_size = sizeof(LUA_QL("<eof>")) - 1;
+    mess_end = mess + lmess - eof_size;
+
     if(strstr(mess, LUA_QL("<eof>")) == mess_end) {
       lua_pop(L, 1);
       result = true;
@@ -34,19 +39,26 @@ static bool incomplete(lua_State* L, int status) {
 
 /* Check if line can be printed */
 static bool is_printable(lua_State* L, int status) {
+  const char* mess;
+  const char* literal;
+  const char* func;
+  bool is_assignment;
+  bool is_literal;
+  bool is_variable;
+
   bool result = false;
 
   if(status == LUA_ERRSYNTAX) {
-    const char* mess = lua_tostring(L, -1);
+    mess = lua_tostring(L, -1);
 
-    bool is_literal  = strstr(mess,  "unexpected symbol") != NULL;
-    bool is_variable = strstr(mess, "'=' expected") != NULL;
+    is_literal  = strstr(mess,  "unexpected symbol") != NULL;
+    is_variable = strstr(mess, "'=' expected") != NULL;
 
     if(is_literal || is_variable) {
       /* pop off error message */
       lua_pop(L, 1);
 
-      const char* literal = lua_tostring(L, -1);
+      literal = lua_tostring(L, -1);
       lua_pop(L, 1);
 
       lua_pushfstring(L, "return %s", literal);
@@ -54,10 +66,10 @@ static bool is_printable(lua_State* L, int status) {
       result = true;
     }
   } else if(lua_type(L, -1) == LUA_TFUNCTION) {
-    const char* func = lua_tostring(L, -2);
+    func = lua_tostring(L, -2);
 
     /* check for a return statement */
-    bool is_assignment = strstr(func, "=");
+    is_assignment = strstr(func, "=");
 
     if(!strstr(func, "return ") && !is_assignment) {
       lua_pop(L, 2);
