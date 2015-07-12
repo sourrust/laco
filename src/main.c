@@ -4,7 +4,7 @@
 int main(int argc, const char** argv) {
   LacoState* laco = laco_new_laco_state(argc, argv);
 
-  while(laco_load_line(laco) != -1) {
+  while(laco_load_line(laco)) {
     laco_handle_line(laco);
   }
 
