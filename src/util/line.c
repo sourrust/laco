@@ -113,22 +113,25 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
   return result;
 }
 
-int laco_load_line(LacoState* laco) {
+bool laco_load_line(LacoState* laco) {
   int status   = laco_get_laco_status(laco);
   lua_State* L = laco_get_laco_lua_state(laco);
 
   lua_settop(L, 0);
 
-  if(!pushline(laco, true)) return -1;
+  if(!pushline(laco, true)) return false;
 
   /* Until complete line */
-  while(true) {
+  while(status != -1) {
     status = luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1),
                              "=stdin");
 
     if(is_printable(L, status)) continue;
     if(!incomplete(L, status)) break;
-    if(!pushline(laco, false)) return -1;
+    if(!pushline(laco, false)) {
+      status = -1;
+      break;
+    }
 
     lua_pushliteral(L, "\n");
     lua_insert(L, -2);
@@ -137,7 +140,7 @@ int laco_load_line(LacoState* laco) {
   lua_remove(L, 1);
   laco_set_laco_status(laco, status);
 
-  return status;
+  return status != -1;
 }
 
 void laco_handle_line(LacoState* laco) {

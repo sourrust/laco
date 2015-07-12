@@ -9,7 +9,7 @@ struct LacoState;
  * Load a line into the lua stack to evaluated later. This function will
  * return -1 if there is no line input to load.
  */
-int laco_load_line(struct LacoState* laco);
+bool laco_load_line(struct LacoState* laco);
 
 /**
  * Called after laco_load_line, this will evaluate the line as a function
