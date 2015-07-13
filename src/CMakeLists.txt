@@ -1,15 +1,11 @@
-set(DEPS_DIR "${laco_SOURCE_DIR}/deps")
+include_directories("${laco_SOURCE_DIR}/src")
 
-include_directories("${laco_SOURCE_DIR}/src" "${DEPS_DIR}/linenoise")
-
-set(SOURCE ${DEPS_DIR}/linenoise/linenoise.c
-           main.c util.c util/print.c
-           util/line.c
-           commands/debugger.c
-           flags.c commands.c laco.c)
+set(SOURCE main.c flags.c laco.c
+           util.c util/print.c util/line.c
+           commands.c commands/debugger.c)
 
 add_executable(laco ${SOURCE})
-target_link_libraries(laco ${LACO_LUA})
+target_link_libraries(laco ${LACO_LUA} linenoise)
 
 install(TARGETS laco
   RUNTIME DESTINATION bin)

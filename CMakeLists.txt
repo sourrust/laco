@@ -48,4 +48,8 @@ configure_file(
   "${laco_SOURCE_DIR}/src/lacoconf.h.in"
   "${laco_BINARY_DIR}/include/lacoconf.h")
 
+# for linenoise library
+include_directories("${laco_SOURCE_DIR}/deps/linenoise")
+add_subdirectory(deps)
+
 add_subdirectory(src)
