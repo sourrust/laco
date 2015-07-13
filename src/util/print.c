@@ -77,7 +77,7 @@ static void print_table(lua_State* L) {
   lua_pop(L, 1);
 }
 
-/* External API*/
+/* External API */
 
 int laco_print_type(LacoState* laco) {
   lua_State* L = laco_get_laco_lua_state(laco);

@@ -2,29 +2,15 @@
 
 #include <stdio.h>
 
+#include "commands.h"
 #include "laco.h"
 #include "util.h"
-
-enum LacoFlags {
-  LACO_HELP,
-  LACO_VERSION
-};
 
 static const char* version_matches[] = {"-v", "--version", NULL};
 static const char* help_matches[]    = {"-h", "-?", "--help", NULL};
 
-/* Check if the command flag is for version */
-static inline bool is_version(const char* arg) {
-  return laco_is_match(version_matches, arg);
-}
-
-/* Check if the command flag is for help */
-static inline bool is_help(const char* arg) {
-  return laco_is_match(help_matches, arg);
-}
-
 /* Print off the current version of laco */
-static void print_version(LacoState* laco) {
+static void handle_version(LacoState* laco, const char** arguments) {
   const char* version = laco_get_laco_version(laco);
 
   printf("laco version %s\n", version);
@@ -32,7 +18,7 @@ static void print_version(LacoState* laco) {
 }
 
 /* Print off the help screen */
-static void print_help(LacoState* laco) {
+static void handle_help(LacoState* laco, const char** arguments) {
   puts("A better REPL for Lua.\n");
   puts("Usage: laco [options]\n");
   puts("-h | -? | --help   \tPrint this help screen");
@@ -41,25 +27,16 @@ static void print_help(LacoState* laco) {
   laco_kill(laco, 0, NULL);
 }
 
+static const struct LacoCommand flag_commands[] = {
+  { version_matches, handle_version },
+  { help_matches,    handle_help },
+  { NULL, NULL}
+};
+
 /* External API */
 
 void laco_handle_flag(LacoState* laco) {
-  int arg_type;
-  const char* arg = laco_get_laco_args(laco)[1];
-  if(arg == NULL) return;
+  const char* command = laco_get_laco_args(laco)[1];
 
-  if(is_version(arg)) {
-    arg_type = LACO_VERSION;
-  } else if(is_help(arg)) {
-    arg_type = LACO_HELP;
-  }
-
-  switch(arg_type) {
-    case LACO_VERSION:
-      print_version(laco);
-    case LACO_HELP:
-      print_help(laco);
-    default:
-      break;
-  }
+  laco_dispatch(flag_commands, laco, command, NULL);
 }

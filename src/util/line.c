@@ -112,6 +112,8 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
   return result;
 }
 
+/* External API */
+
 bool laco_load_line(LacoState* laco) {
   int status   = laco_get_laco_status(laco);
   lua_State* L = laco_get_laco_lua_state(laco);
