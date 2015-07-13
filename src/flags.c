@@ -10,8 +10,8 @@ enum LacoFlags {
   LACO_VERSION
 };
 
-static const char* version_matches[] = {"-v", "--version"};
-static const char* help_matches[]    = {"-h", "-?", "--help"};
+static const char* version_matches[] = {"-v", "--version", NULL};
+static const char* help_matches[]    = {"-h", "-?", "--help", NULL};
 
 /* Check if the command flag is for version */
 static inline bool is_version(const char* arg) {
