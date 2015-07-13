@@ -44,7 +44,7 @@ bool laco_is_match(const char** matches, const char* test_string);
  * Break the provided string into an array of strings that are between the
  * split_with value. The last value of this array will be NULL.
  */
-char** laco_split_by(const char* split_with, char* string,
+char** laco_split_by(const char split_with, char* string,
                      int ignore_repeats);
 
 /* Macro for splitting with spaces */

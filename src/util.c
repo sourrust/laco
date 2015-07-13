@@ -39,7 +39,7 @@ bool laco_is_match(const char** matches, const char* test_string) {
   return false;
 }
 
-char** laco_split_by(const char* split_with, char* string,
+char** laco_split_by(const char split_with, char* string,
                      int ignore_repeats) {
   if(string == NULL) return NULL;
 
@@ -47,11 +47,11 @@ char** laco_split_by(const char* split_with, char* string,
   size_t i = 0;
 
   while(1) {
-    result[i] = strsep(&string, split_with);
+    result[i] = strsep(&string, &split_with);
 
     if(result[i] == NULL) break;
 
-    if(ignore_repeats) ignore_extra(split_with[0], &string);
+    if(ignore_repeats) ignore_extra(split_with, &string);
 
     i += 1;
   }
