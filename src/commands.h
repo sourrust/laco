@@ -10,6 +10,10 @@ struct LacoCommand {
   LacoHandler handler;
 };
 
+void laco_dispatch(const struct LacoCommand* commands,
+                   struct LacoState* laco, const char* command_keyword,
+                   const char** arguments);
+
 /**
  * Gets passed ever line to see if it matches one of the REPL command. If it
  * does, that command will be executed.

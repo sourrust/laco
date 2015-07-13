@@ -32,6 +32,20 @@ static inline bool is_debug_info(const char* command) {
   return laco_is_match(debug_info_matches, command);
 }
 
+void laco_dispatch(const struct LacoCommand* commands,
+                   struct LacoState* laco, const char* command_keyword,
+                   const char** arguments) {
+  int i;
+  const char** matches;
+
+  for(i = 0; (matches = commands[i].matches); i++) {
+    if(laco_is_match(matches, command_keyword)) {
+      commands[i].handler(laco, arguments);
+      break;
+    }
+  }
+}
+
 void laco_handle_command(struct LacoState* laco, char* line) {
   if(laco != NULL && line != NULL) {
     char* command_line   = strdup(line + 1);
