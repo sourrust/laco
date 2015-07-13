@@ -37,6 +37,8 @@ static const struct LacoCommand line_commands[] = {
   { NULL, NULL }
 };
 
+/* External API */
+
 void laco_dispatch(const struct LacoCommand* commands,
                    struct LacoState* laco, const char* command_keyword,
                    const char** arguments) {
