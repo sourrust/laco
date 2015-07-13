@@ -7,11 +7,11 @@
 #include "util.h"
 #include "commands/debugger.h"
 
-static const char* quit_matches[] = {"quit", "q"};
-static const char* help_matches[] = {"help", "?"};
+static const char* quit_matches[] = {"quit", "q", NULL};
+static const char* help_matches[] = {"help", "?", NULL};
 
 /* Debugger commands */
-static const char* debug_info_matches[] = {"info"};
+static const char* debug_info_matches[] = {"info", NULL};
 
 static void print_commands_help() {
   puts("  Commands available:\n");
