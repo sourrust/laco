@@ -17,7 +17,7 @@ void laco_print_debug_info(LacoState* laco, const char* function_name) {
   lua_Debug debug_info = {0};
 
   char* name        = strdup(function_name);
-  char** namespaces = laco_split_by(".", name, 0);
+  char** namespaces = laco_split_by('.', name, 0);
 
   /* Walk down the namespace if there is something to go down */
   for(i = 0; (namespace = namespaces[i]); i++) {

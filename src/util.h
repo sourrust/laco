@@ -49,6 +49,6 @@ char** laco_split_by(const char split_with, char* string,
 
 /* Macro for splitting with spaces */
 #define laco_line_to_words(line) \
-  laco_split_by(" ", line, 1)
+  laco_split_by(' ', line, 1)
 
 #endif /* LACO_UTIL_H */
