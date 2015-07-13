@@ -3,6 +3,13 @@
 
 struct LacoState;
 
+typedef void (*LacoHandler)(struct LacoState* laco, const char** arguments);
+
+struct LacoCommand {
+  const char** matches;
+  LacoHandler handler;
+};
+
 /**
  * Gets passed ever line to see if it matches one of the REPL command. If it
  * does, that command will be executed.
