@@ -29,7 +29,7 @@ static void handle_help(LacoState* laco, const char** arguments) {
 static const struct LacoCommand flag_commands[] = {
   { version_matches, handle_version },
   { help_matches,    handle_help },
-  { NULL, NULL}
+  { NULL, NULL }
 };
 
 /* External API */
