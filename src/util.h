@@ -5,6 +5,13 @@
 
 struct LacoState;
 
+typedef void (*LacoHandler)(struct LacoState* laco, const char** arguments);
+
+struct LacoCommand {
+  const char** matches;
+  LacoHandler handler;
+};
+
 /**
  * Load a line into the lua stack to evaluated later. This function will
  * return false if there is no line input to load.
@@ -50,5 +57,16 @@ char** laco_split_by(const char split_with, char* string,
 /* Macro for splitting with spaces */
 #define laco_line_to_words(line) \
   laco_split_by(' ', line, 1)
+
+/**
+ * Goes through each instance from the list of commands and see if there is
+ * a match with for command_keyword. When there is a match, the defined
+ * handler inside the LacoCommand gets called -- passing in LacoState and
+ * the arguments. The list of commands expects the last entry of the array
+ * to be `{ NULL, NULL }` for ease of iteration.
+ */
+void laco_dispatch(const struct LacoCommand* commands,
+                   struct LacoState* laco, const char* command_keyword,
+                   const char** arguments);
 
 #endif /* LACO_UTIL_H */
