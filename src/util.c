@@ -59,9 +59,8 @@ char** laco_split_by(const char split_with, char* string,
   return result;
 }
 
-void laco_dispatch(const struct LacoCommand* commands,
-                   struct LacoState* laco, const char* command_keyword,
-                   const char** arguments) {
+void laco_dispatch(const LacoCommand* commands, LacoState* laco,
+                   const char* command_keyword, const char** arguments) {
   int i;
   const char** matches;
 

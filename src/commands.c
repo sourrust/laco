@@ -27,7 +27,7 @@ static void handle_debug_info(struct LacoState* laco,
   laco_print_debug_info(laco, arguments[0]);
 }
 
-static const struct LacoCommand line_commands[] = {
+static const LacoCommand line_commands[] = {
   { quit_matches, handle_quit },
   { help_matches, handle_help },
 

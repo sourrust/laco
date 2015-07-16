@@ -26,7 +26,7 @@ static void handle_help(LacoState* laco, const char** arguments) {
   laco_kill(laco, 0, NULL);
 }
 
-static const struct LacoCommand flag_commands[] = {
+static const LacoCommand flag_commands[] = {
   { version_matches, handle_version },
   { help_matches,    handle_help },
   { NULL, NULL }
