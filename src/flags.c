@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-#include "commands.h"
 #include "laco.h"
 #include "util.h"
 

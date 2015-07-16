@@ -39,20 +39,6 @@ static const struct LacoCommand line_commands[] = {
 
 /* External API */
 
-void laco_dispatch(const struct LacoCommand* commands,
-                   struct LacoState* laco, const char* command_keyword,
-                   const char** arguments) {
-  int i;
-  const char** matches;
-
-  for(i = 0; (matches = commands[i].matches); i++) {
-    if(laco_is_match(matches, command_keyword)) {
-      commands[i].handler(laco, arguments);
-      break;
-    }
-  }
-}
-
 void laco_handle_command(struct LacoState* laco, char* line) {
   if(laco != NULL && line != NULL) {
     char* command_line   = strdup(line + 1);
