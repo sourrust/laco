@@ -5,8 +5,18 @@
 
 struct LacoState;
 
+/**
+ * Generalized function pointer for handling commands from from either a
+ * command line flag or a command inside of laco itself.
+ */
 typedef void (*LacoHandler)(struct LacoState* laco, const char** arguments);
 
+/**
+ * A representation of each command with a list of string matches and a
+ * function pointer to the behavior of said command. When there is a match
+ * to one of the string, this function will be called and passed in the
+ * appropriate arguments.
+ */
 struct LacoCommand {
   const char** matches;
   LacoHandler handler;
