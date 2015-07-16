@@ -21,6 +21,7 @@ struct LacoCommand {
   const char** matches;
   LacoHandler handler;
 };
+typedef struct LacoCommand LacoCommand;
 
 /**
  * Load a line into the lua stack to evaluated later. This function will
