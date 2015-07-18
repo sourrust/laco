@@ -18,10 +18,12 @@ static void handle_version(LacoState* laco, const char** arguments) {
 
 /* Print off the help screen */
 static void handle_help(LacoState* laco, const char** arguments) {
-  puts("A better REPL for Lua.\n");
-  puts("Usage: laco [options]\n");
-  puts("-h, --help     Print this help screen");
-  puts("-v, --version  Print current version");
+  puts(
+    "A better REPL for Lua.\n\n"
+    "Usage: laco [options]\n\n"
+    "-h, --help     Print this help screen\n"
+    "-v, --version  Print current version"
+  );
 
   laco_kill(laco, 0, NULL);
 }
