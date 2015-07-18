@@ -17,8 +17,8 @@ static void handle_quit(struct LacoState* laco, const char** arguments) {
 
 static void handle_help(struct LacoState* laco, const char** arguments) {
   puts("  Commands available:\n");
-  puts("    :quit, :q     Exit laco");
-  puts("    :help, :?     Display this list of commands");
+  puts("    :q, :quit     Exit laco");
+  puts("    :?, :help     Display this list of commands");
   puts("    :info <name>  Show information on given function");
 }
 
