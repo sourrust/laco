@@ -8,9 +8,8 @@
 
 static inline void ignore_extra(const char chr, char** string_ptr) {
   assert(string_ptr != NULL);
-  if(*string_ptr == NULL) return;
 
-  while(**string_ptr == chr) {
+  while(*string_ptr != NULL && **string_ptr == chr) {
     *string_ptr += 1;
   }
 }
