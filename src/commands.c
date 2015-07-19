@@ -12,6 +12,8 @@ static const char* help_matches[] = {"help", "?", NULL};
 static const char* debug_info_matches[] = {"info", NULL};
 
 static void handle_quit(struct LacoState* laco, const char** arguments) {
+  assert(laco != NULL);
+
   laco_kill(laco, 0, "Exiting laco...");
 }
 
@@ -26,6 +28,9 @@ static void handle_help(struct LacoState* laco, const char** arguments) {
 
 static void handle_debug_info(struct LacoState* laco,
                               const char** arguments) {
+  assert(laco != NULL);
+  assert(arguments != NULL);
+
   laco_print_debug_info(laco, arguments[0]);
 }
 
@@ -42,20 +47,21 @@ static const LacoCommand line_commands[] = {
 /* External API */
 
 void laco_handle_command(struct LacoState* laco, char* line) {
-  if(laco != NULL && line != NULL) {
-    char* command_line   = strdup(line + 1);
-    char** command_words = laco_line_to_words(command_line);
+  assert(laco != NULL);
+  assert(line != NULL);
 
-    /* Alias for parsed out words within the line */
-    const char* command    = command_words[0];
-    const char** arguments = (const char**) command_words + 1;
+  char* command_line   = strdup(line + 1);
+  char** command_words = laco_line_to_words(command_line);
 
-    laco_dispatch(line_commands, laco, command, arguments);
+  /* Alias for parsed out words within the line */
+  const char* command    = command_words[0];
+  const char** arguments = (const char**) command_words + 1;
 
-    free(command_line);
-    free(command_words);
+  laco_dispatch(line_commands, laco, command, arguments);
 
-    /* Make it seems like this was an empty line */
-    line[0] = '\0';
-  }
+  free(command_line);
+  free(command_words);
+
+  /* Make it seems like this was an empty line */
+  line[0] = '\0';
 }

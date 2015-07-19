@@ -8,6 +8,8 @@
 
 /* C Wrapper for lua's tostring function  */
 inline static const char* to_lua_string(lua_State* L) {
+  assert(L != NULL);
+
   const char* result = NULL;
 
   lua_getglobal(L, "tostring");
@@ -24,6 +26,8 @@ inline static const char* to_lua_string(lua_State* L) {
 
 /* Format printing of a single key value pair */
 static void print_key_value(lua_State* L, char start_char) {
+  assert(L != NULL);
+
   printf("%c %s = %s\n",
       start_char, lua_tostring(L, -2),
       to_lua_string(L));
@@ -31,6 +35,8 @@ static void print_key_value(lua_State* L, char start_char) {
 
 /* Format printing of a single list element */
 static void print_list(lua_State* L, char start_char) {
+  assert(L != NULL);
+
   const char* format = NULL;
   if(start_char == '{') {
     format = "%c%s";
@@ -43,6 +49,8 @@ static void print_list(lua_State* L, char start_char) {
 
 /* Print both types of tables */
 static void print_table(lua_State* L) {
+  assert(L != NULL);
+
   bool first_elem = true;
   int luatype;
 
@@ -80,6 +88,8 @@ static void print_table(lua_State* L) {
 /* External API */
 
 int laco_print_type(LacoState* laco) {
+  assert(laco != NULL);
+
   lua_State* L = laco_get_laco_lua_state(laco);
   int status   = laco_get_laco_status(laco);
   int luatype  = lua_type(L, -1);
@@ -99,6 +109,8 @@ int laco_print_type(LacoState* laco) {
 }
 
 void laco_report_error(LacoState* laco, int status) {
+  assert(laco != NULL);
+
   lua_State* L = laco_get_laco_lua_state(laco);
 
   if(status != 0 && lua_isstring(L, -1)) {

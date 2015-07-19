@@ -76,7 +76,7 @@ int laco_get_laco_status(LacoState* laco) {
 }
 
 void laco_set_laco_status(LacoState* laco, int status) {
-  if(laco != NULL) {
-    laco->status = status;
-  }
+  assert(laco != NULL);
+
+  laco->status = status;
 }

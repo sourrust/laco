@@ -7,9 +7,9 @@
 #include "laco.h"
 
 static inline void ignore_extra(const char chr, char** string_ptr) {
-  if(*string_ptr == NULL) return;
+  assert(string_ptr != NULL);
 
-  while(**string_ptr == chr) {
+  while(*string_ptr != NULL && **string_ptr == chr) {
     *string_ptr += 1;
   }
 }
@@ -17,6 +17,8 @@ static inline void ignore_extra(const char chr, char** string_ptr) {
 /* External API */
 
 void laco_kill(LacoState* laco, int status, const char* message) {
+  assert(laco != NULL);
+
   laco_destroy_laco_state(laco);
 
   if(message != NULL) {
@@ -27,6 +29,9 @@ void laco_kill(LacoState* laco, int status, const char* message) {
 }
 
 bool laco_is_match(const char** matches, const char* test_string) {
+  assert(matches != NULL);
+  assert(test_string != NULL);
+
   int i;
   const char* match;
 
@@ -41,7 +46,7 @@ bool laco_is_match(const char** matches, const char* test_string) {
 
 char** laco_split_by(const char split_with, char* string,
                      int ignore_repeats) {
-  if(string == NULL) return NULL;
+  assert(string != NULL);
 
   char** result = calloc(16, sizeof(char*));
   size_t i = 0;
@@ -61,6 +66,10 @@ char** laco_split_by(const char split_with, char* string,
 
 void laco_dispatch(const LacoCommand* commands, LacoState* laco,
                    const char* command_keyword, const char** arguments) {
+  assert(commands != NULL);
+  assert(laco != NULL);
+  assert(command_keyword != NULL);
+
   int i;
   const char** matches;
 
