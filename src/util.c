@@ -47,7 +47,7 @@ bool laco_is_match(const char** matches, const char* test_string) {
 
 char** laco_split_by(const char split_with, char* string,
                      int ignore_repeats) {
-  if(string == NULL) return NULL;
+  assert(string != NULL);
 
   char** result = calloc(16, sizeof(char*));
   size_t i = 0;
