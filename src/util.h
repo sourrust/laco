@@ -2,6 +2,7 @@
 #define LACO_UTIL_H
 
 #include <stdbool.h>
+#include <assert.h>
 
 struct LacoState;
 
