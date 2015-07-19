@@ -10,6 +10,9 @@
 #include "util.h"
 
 void laco_print_debug_info(LacoState* laco, const char* function_name) {
+  assert(laco != NULL);
+  assert(function_name != NULL);
+
   int i;
   char* namespace;
   lua_State* L         = laco_get_laco_lua_state(laco);

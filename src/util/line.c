@@ -13,6 +13,8 @@
 
 /* Check if line is incomplete */
 static bool incomplete(lua_State* L, int status) {
+  assert(L != NULL);
+
   size_t lmess;
   size_t eof_size;
   const char* mess;
@@ -38,6 +40,8 @@ static bool incomplete(lua_State* L, int status) {
 
 /* Check if line can be printed */
 static bool is_printable(lua_State* L, int status) {
+  assert(L != NULL);
+
   const char* mess;
   const char* literal;
   const char* func;
@@ -82,6 +86,9 @@ static bool is_printable(lua_State* L, int status) {
 }
 
 static char* get_line(LacoState* laco, const char* prompt) {
+  assert(laco != NULL);
+  assert(prompt != NULL);
+
   char* line = linenoise(prompt);
 
   if(line != NULL) {
@@ -97,6 +104,8 @@ static char* get_line(LacoState* laco, const char* prompt) {
 
 /* Push a line to the stack and store in history */
 static bool pushline(LacoState* laco, bool isFirstLine) {
+  assert(laco != NULL);
+
   const char* prompt = (isFirstLine) ? "> " : "... ";
   char* line         = get_line(laco, prompt);
   lua_State* L       = laco_get_laco_lua_state(laco);
@@ -115,6 +124,8 @@ static bool pushline(LacoState* laco, bool isFirstLine) {
 /* External API */
 
 bool laco_load_line(LacoState* laco) {
+  assert(laco != NULL);
+
   int status   = laco_get_laco_status(laco);
   lua_State* L = laco_get_laco_lua_state(laco);
 
@@ -145,6 +156,8 @@ bool laco_load_line(LacoState* laco) {
 }
 
 void laco_handle_line(LacoState* laco) {
+  assert(laco != NULL);
+
   int status   = laco_get_laco_status(laco);
   lua_State* L = laco_get_laco_lua_state(laco);
 

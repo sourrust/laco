@@ -10,6 +10,8 @@ static const char* help_matches[]    = {"-h", "--help", NULL};
 
 /* Print off the current version of laco */
 static void handle_version(LacoState* laco, const char** arguments) {
+  assert(laco != NULL);
+
   const char* version = laco_get_laco_version(laco);
 
   printf("laco version %s\n", version);
@@ -18,6 +20,8 @@ static void handle_version(LacoState* laco, const char** arguments) {
 
 /* Print off the help screen */
 static void handle_help(LacoState* laco, const char** arguments) {
+  assert(laco != NULL);
+
   puts(
     "A better REPL for Lua.\n\n"
     "Usage: laco [options]\n\n"
@@ -37,6 +41,8 @@ static const LacoCommand flag_commands[] = {
 /* External API */
 
 void laco_handle_flag(LacoState* laco) {
+  assert(laco != NULL);
+
   const char* command = laco_get_laco_args(laco)[1];
 
   laco_dispatch(flag_commands, laco, command, NULL);

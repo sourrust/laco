@@ -7,6 +7,7 @@
 #include "laco.h"
 
 static inline void ignore_extra(const char chr, char** string_ptr) {
+  assert(string_ptr != NULL);
   if(*string_ptr == NULL) return;
 
   while(**string_ptr == chr) {
@@ -17,6 +18,8 @@ static inline void ignore_extra(const char chr, char** string_ptr) {
 /* External API */
 
 void laco_kill(LacoState* laco, int status, const char* message) {
+  assert(laco != NULL);
+
   laco_destroy_laco_state(laco);
 
   if(message != NULL) {
@@ -27,6 +30,9 @@ void laco_kill(LacoState* laco, int status, const char* message) {
 }
 
 bool laco_is_match(const char** matches, const char* test_string) {
+  assert(matches != NULL);
+  assert(test_string != NULL);
+
   int i;
   const char* match;
 
@@ -61,6 +67,10 @@ char** laco_split_by(const char split_with, char* string,
 
 void laco_dispatch(const LacoCommand* commands, LacoState* laco,
                    const char* command_keyword, const char** arguments) {
+  assert(commands != NULL);
+  assert(laco != NULL);
+  assert(command_keyword != NULL);
+
   int i;
   const char** matches;
 

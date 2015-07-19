@@ -12,6 +12,8 @@ static const char* help_matches[] = {"help", "?", NULL};
 static const char* debug_info_matches[] = {"info", NULL};
 
 static void handle_quit(struct LacoState* laco, const char** arguments) {
+  assert(laco != NULL);
+
   laco_kill(laco, 0, "Exiting laco...");
 }
 
@@ -26,6 +28,9 @@ static void handle_help(struct LacoState* laco, const char** arguments) {
 
 static void handle_debug_info(struct LacoState* laco,
                               const char** arguments) {
+  assert(laco != NULL);
+  assert(arguments != NULL);
+
   laco_print_debug_info(laco, arguments[0]);
 }
 
