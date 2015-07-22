@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
   "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
-set(LACO_VERSION_STRING "0.2.0")
+set(LACO_VERSION_STRING "0.3.0")
 execute_process(COMMAND "date" "+%a %b %d, %Y %T"
   OUTPUT_VARIABLE LACO_TIMESTAMP)
 
