@@ -21,8 +21,8 @@ static void handle_help(struct LacoState* laco, const char** arguments) {
   puts(
     "  Commands available:\n\n"
     "    :q, :quit     Exit laco\n"
-    "    :?, :help     Display this list of commands\n"
-    "    :info <name>  Show information on given function"
+    "    :?, :help     Display this list of commands"
+    /* "    :info <name>  Show information on given function" */
   );
 }
 
@@ -39,7 +39,7 @@ static const LacoCommand line_commands[] = {
   { help_matches, handle_help },
 
   /* Debugger commands */
-  { debug_info_matches, handle_debug_info },
+  /* { debug_info_matches, handle_debug_info }, */
 
   { NULL, NULL }
 };
