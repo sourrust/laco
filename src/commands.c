@@ -1,33 +1,49 @@
 #include "commands.h"
 
+#include <lauxlib.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "laco.h"
 #include "util.h"
 #include "commands/debugger.h"
 
 static const char* quit_matches[] = {"quit", "q", NULL};
 static const char* help_matches[] = {"help", "?", NULL};
+static const char* load_matches[] = {"load", NULL};
 static const char* debug_info_matches[] = {"info", NULL};
 
-static void handle_quit(struct LacoState* laco, const char** arguments) {
+static void handle_quit(LacoState* laco, const char** arguments) {
   assert(laco != NULL);
 
   laco_kill(laco, 0, "Exiting laco...");
 }
 
-static void handle_help(struct LacoState* laco, const char** arguments) {
+static void handle_help(LacoState* laco, const char** arguments) {
   puts(
     "  Commands available:\n\n"
     "    :q, :quit     Exit laco\n"
-    "    :?, :help     Display this list of commands"
+    "    :?, :help     Display this list of commands\n"
+    "    :load <file>  Load in the given file name"
     /* "    :info <name>  Show information on given function" */
   );
 }
 
-static void handle_debug_info(struct LacoState* laco,
-                              const char** arguments) {
+static void handle_load(LacoState* laco, const char** arguments) {
+  assert(laco != NULL);
+
+  lua_State* L         = laco_get_laco_lua_state(laco);
+  const char* filename = arguments[0];
+
+  if((luaL_dofile(L, filename)) != 0) {
+    printf("Couldn't load in file \"%s\"\n", filename);
+    lua_pop(L, 1);
+  }
+}
+
+static void handle_debug_info(LacoState* laco, const char** arguments) {
   assert(laco != NULL);
   assert(arguments != NULL);
 
@@ -37,6 +53,7 @@ static void handle_debug_info(struct LacoState* laco,
 static const LacoCommand line_commands[] = {
   { quit_matches, handle_quit },
   { help_matches, handle_help },
+  { load_matches, handle_load },
 
   /* Debugger commands */
   /* { debug_info_matches, handle_debug_info }, */
@@ -46,7 +63,7 @@ static const LacoCommand line_commands[] = {
 
 /* External API */
 
-void laco_handle_command(struct LacoState* laco, char* line) {
+void laco_handle_command(LacoState* laco, char* line) {
   assert(laco != NULL);
   assert(line != NULL);
 
