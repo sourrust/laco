@@ -1,9 +1,12 @@
 #include "commands.h"
 
+#include <lauxlib.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "laco.h"
 #include "util.h"
 #include "commands/debugger.h"
 
@@ -24,6 +27,18 @@ static void handle_help(struct LacoState* laco, const char** arguments) {
     "    :?, :help     Display this list of commands"
     /* "    :info <name>  Show information on given function" */
   );
+}
+
+static void handle_load(LacoState* laco, const char** arguments) {
+  assert(laco != NULL);
+
+  lua_State* L         = laco_get_laco_lua_state(laco);
+  const char* filename = arguments[0];
+
+  if((luaL_dofile(L, filename)) != 0) {
+    printf("Couldn't load in file \"%s\"\n", filename);
+    lua_pop(L, 1);
+  }
 }
 
 static void handle_debug_info(struct LacoState* laco,
