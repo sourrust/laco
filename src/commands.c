@@ -15,13 +15,13 @@ static const char* help_matches[] = {"help", "?", NULL};
 static const char* load_matches[] = {"load", NULL};
 static const char* debug_info_matches[] = {"info", NULL};
 
-static void handle_quit(struct LacoState* laco, const char** arguments) {
+static void handle_quit(LacoState* laco, const char** arguments) {
   assert(laco != NULL);
 
   laco_kill(laco, 0, "Exiting laco...");
 }
 
-static void handle_help(struct LacoState* laco, const char** arguments) {
+static void handle_help(LacoState* laco, const char** arguments) {
   puts(
     "  Commands available:\n\n"
     "    :q, :quit     Exit laco\n"
@@ -43,8 +43,7 @@ static void handle_load(LacoState* laco, const char** arguments) {
   }
 }
 
-static void handle_debug_info(struct LacoState* laco,
-                              const char** arguments) {
+static void handle_debug_info(LacoState* laco, const char** arguments) {
   assert(laco != NULL);
   assert(arguments != NULL);
 
@@ -64,7 +63,7 @@ static const LacoCommand line_commands[] = {
 
 /* External API */
 
-void laco_handle_command(struct LacoState* laco, char* line) {
+void laco_handle_command(LacoState* laco, char* line) {
   assert(laco != NULL);
   assert(line != NULL);
 
