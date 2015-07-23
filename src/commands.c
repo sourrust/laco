@@ -12,6 +12,7 @@
 
 static const char* quit_matches[] = {"quit", "q", NULL};
 static const char* help_matches[] = {"help", "?", NULL};
+static const char* load_matches[] = {"load", NULL};
 static const char* debug_info_matches[] = {"info", NULL};
 
 static void handle_quit(struct LacoState* laco, const char** arguments) {
@@ -24,7 +25,8 @@ static void handle_help(struct LacoState* laco, const char** arguments) {
   puts(
     "  Commands available:\n\n"
     "    :q, :quit     Exit laco\n"
-    "    :?, :help     Display this list of commands"
+    "    :?, :help     Display this list of commands\n"
+    "    :load <file>  Load in the given file name"
     /* "    :info <name>  Show information on given function" */
   );
 }
@@ -52,6 +54,7 @@ static void handle_debug_info(struct LacoState* laco,
 static const LacoCommand line_commands[] = {
   { quit_matches, handle_quit },
   { help_matches, handle_help },
+  { load_matches, handle_load },
 
   /* Debugger commands */
   /* { debug_info_matches, handle_debug_info }, */
