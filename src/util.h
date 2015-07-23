@@ -77,7 +77,7 @@ char** laco_split_by(const char split_with, char* string,
  * the arguments. The list of commands expects the last entry of the array
  * to be `{ NULL, NULL }` for ease of iteration.
  */
-void laco_dispatch(const LacoCommand* commands, struct LacoState* laco,
+bool laco_dispatch(const LacoCommand* commands, struct LacoState* laco,
                    const char* command_keyword, const char** arguments);
 
 #endif /* LACO_UTIL_H */
