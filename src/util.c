@@ -64,7 +64,7 @@ char** laco_split_by(const char split_with, char* string,
   return result;
 }
 
-void laco_dispatch(const LacoCommand* commands, LacoState* laco,
+bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
                    const char* command_keyword, const char** arguments) {
   assert(commands != NULL);
   assert(laco != NULL);
@@ -76,7 +76,9 @@ void laco_dispatch(const LacoCommand* commands, LacoState* laco,
   for(i = 0; (matches = commands[i].matches); i++) {
     if(laco_is_match(matches, command_keyword)) {
       commands[i].handler(laco, arguments);
-      break;
+      return true;
     }
   }
+
+  return false;
 }
