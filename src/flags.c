@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 
+#include <lauxlib.h>
+
 #include "laco.h"
 #include "util.h"
 
@@ -43,7 +45,12 @@ static const LacoCommand flag_commands[] = {
 void laco_handle_flag(LacoState* laco) {
   assert(laco != NULL);
 
+  lua_State* L        = laco_get_laco_lua_state(laco);
   const char* command = laco_get_laco_args(laco)[1];
+  bool was_handled    = laco_dispatch(flag_commands, laco, command, NULL);
 
-  laco_dispatch(flag_commands, laco, command, NULL);
+  if(!was_handled && luaL_dofile(L, command) != 0) {
+    laco_kill(laco, -1,
+      "Error: used an unknown flag or file provided doesn't exist");
+  }
 }
