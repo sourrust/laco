@@ -26,7 +26,7 @@ static void handle_help(LacoState* laco, const char** arguments) {
 
   puts(
     "A better REPL for Lua.\n\n"
-    "Usage: laco [options]\n\n"
+    "Usage: laco [options] [filename]\n\n"
     "-h, --help     Print this help screen\n"
     "-v, --version  Print current version"
   );
