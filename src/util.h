@@ -74,8 +74,9 @@ char** laco_split_by(const char split_with, char* string,
  * Goes through each instance from the list of commands and see if there is
  * a match with for command_keyword. When there is a match, the defined
  * handler inside the LacoCommand gets called -- passing in LacoState and
- * the arguments. The list of commands expects the last entry of the array
- * to be `{ NULL, NULL }` for ease of iteration.
+ * the arguments -- and laco_dispatch returns true, otherwise false. The
+ * list of commands expects the last entry of the array to be
+ * `{ NULL, NULL }` for ease of iteration.
  */
 bool laco_dispatch(const LacoCommand* commands, struct LacoState* laco,
                    const char* command_keyword, const char** arguments);
