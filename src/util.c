@@ -51,14 +51,8 @@ char** laco_split_by(const char split_with, char* string,
   size_t i;
   char** result = calloc(16, sizeof(char*));
 
-  while(1) {
-    result[i] = strsep(&string, &split_with);
-
-    if(result[i] == NULL) break;
-
+  for(i = 0; (result[i] = strsep(&string, &split_with)); i++) {
     if(ignore_repeats) ignore_extra(split_with, &string);
-
-    i += 1;
   }
 
   return result;
