@@ -67,11 +67,17 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
   assert(command_keyword != NULL);
 
   int i;
+  const LacoCommand* command;
   const char** matches;
+  LacoHandler handler;
 
-  for(i = 0; (matches = commands[i].matches); i++) {
-    if(laco_is_match(matches, command_keyword)) {
-      commands[i].handler(laco, arguments);
+  for(i = 0; (command = &commands[i]); i++) {
+    matches = command->matches;
+    handler = command->handler;
+
+    if((matches != NULL && handler != NULL) &&
+        laco_is_match(matches, command_keyword)) {
+      handler(laco, arguments);
       return true;
     }
   }
