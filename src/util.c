@@ -75,7 +75,8 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
     matches = command->matches;
     handler = command->handler;
 
-    if(laco_is_match(matches, command_keyword)) {
+    if((matches != NULL && handler != NULL) &&
+        laco_is_match(matches, command_keyword)) {
       handler(laco, arguments);
       return true;
     }
