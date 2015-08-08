@@ -1,0 +1,14 @@
+---
+Language: Cpp
+BasedOnStyle: Chromium
+# This will be added to clang-format on either 3.7 or 3.8. Without it, I
+# don't recommend running clang-format without being aware that you will
+# need to correctly align assignments manually.
+#
+# AlignConsecutiveAssignments: true
+AccessModifierOffset: -2
+ColumnLimit: 76
+Standard: Cpp11
+SpaceBeforeParens: Never
+...
+
