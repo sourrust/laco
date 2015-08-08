@@ -69,6 +69,7 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
   assert(command_keyword != NULL);
 
   int i;
+  bool result = false;
   const LacoCommand* command;
   const char** matches;
   LacoHandler handler;
@@ -80,9 +81,10 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
     if((matches != NULL && handler != NULL) &&
         laco_is_match(matches, command_keyword)) {
       handler(laco, arguments);
-      return true;
+      result = true;
+      break;
     }
   }
 
-  return false;
+  return result;
 }
