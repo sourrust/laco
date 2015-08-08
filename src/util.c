@@ -33,15 +33,17 @@ bool laco_is_match(const char** matches, const char* test_string) {
   assert(test_string != NULL);
 
   int i;
+  bool result = false;
   const char* match;
 
   for(i = 0; (match = matches[i]); i++) {
     if(strcmp(test_string, match) == 0) {
-      return true;
+      result = true;
+      break;
     }
   }
 
-  return false;
+  return result;
 }
 
 char** laco_split_by(const char split_with, char* string,
@@ -67,6 +69,7 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
   assert(command_keyword != NULL);
 
   int i;
+  bool result = false;
   const LacoCommand* command;
   const char** matches;
   LacoHandler handler;
@@ -78,9 +81,10 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
     if((matches != NULL && handler != NULL) &&
         laco_is_match(matches, command_keyword)) {
       handler(laco, arguments);
-      return true;
+      result = true;
+      break;
     }
   }
 
-  return false;
+  return result;
 }
