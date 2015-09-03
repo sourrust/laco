@@ -63,8 +63,7 @@ bool laco_is_match(const char** matches, const char* test_string);
  * Break the provided string into an array of strings that are between the
  * split_with value. The last value of this array will be NULL.
  */
-char** laco_split_by(const char split_with, char* string,
-                     int ignore_repeats);
+char** laco_split_by(const char split_with, char* string, int ignore_repeats);
 
 /* Macro for splitting with spaces */
 #define laco_line_to_words(line) \
@@ -78,7 +77,9 @@ char** laco_split_by(const char split_with, char* string,
  * list of commands expects the last entry of the array to be
  * `{ NULL, NULL }` for ease of iteration.
  */
-bool laco_dispatch(const LacoCommand* commands, struct LacoState* laco,
-                   const char* command_keyword, const char** arguments);
+bool laco_dispatch(const LacoCommand* commands,
+                   struct LacoState* laco,
+                   const char* command_keyword,
+                   const char** arguments);
 
 #endif /* LACO_UTIL_H */

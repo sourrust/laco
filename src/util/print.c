@@ -28,9 +28,7 @@ inline static const char* to_lua_string(lua_State* L) {
 static void print_key_value(lua_State* L, char start_char) {
   assert(L != NULL);
 
-  printf("%c %s = %s\n",
-      start_char, lua_tostring(L, -2),
-      to_lua_string(L));
+  printf("%c %s = %s\n", start_char, lua_tostring(L, -2), to_lua_string(L));
 }
 
 /* Format printing of a single list element */
@@ -45,7 +43,6 @@ static void print_list(lua_State* L, char start_char) {
   }
   printf(format, start_char, to_lua_string(L));
 }
-
 
 /* Print both types of tables */
 static void print_table(lua_State* L) {

@@ -28,8 +28,7 @@ static void handle_help(LacoState* laco, const char** arguments) {
     "A better REPL for Lua.\n\n"
     "Usage: laco [options] [filename]\n\n"
     "-h, --help     Print this help screen\n"
-    "-v, --version  Print current version"
-  );
+    "-v, --version  Print current version");
 
   laco_kill(laco, 0, NULL);
 }
@@ -51,6 +50,6 @@ void laco_handle_flag(LacoState* laco) {
 
   if(!was_handled && luaL_dofile(L, command) != 0) {
     laco_kill(laco, -1,
-      "Error: used an unknown flag or file provided doesn't exist");
+              "Error: used an unknown flag or file provided doesn't exist");
   }
 }

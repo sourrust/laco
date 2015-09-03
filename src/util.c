@@ -46,7 +46,8 @@ bool laco_is_match(const char** matches, const char* test_string) {
   return result;
 }
 
-char** laco_split_by(const char split_with, char* string,
+char** laco_split_by(const char split_with,
+                     char* string,
                      int ignore_repeats) {
   assert(string != NULL);
 
@@ -62,8 +63,10 @@ char** laco_split_by(const char split_with, char* string,
   return result;
 }
 
-bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
-                   const char* command_keyword, const char** arguments) {
+bool laco_dispatch(const LacoCommand* commands,
+                   LacoState* laco,
+                   const char* command_keyword,
+                   const char** arguments) {
   assert(commands != NULL);
   assert(laco != NULL);
   assert(command_keyword != NULL);
@@ -79,7 +82,7 @@ bool laco_dispatch(const LacoCommand* commands, LacoState* laco,
     handler = command->handler;
 
     if((matches != NULL && handler != NULL) &&
-        laco_is_match(matches, command_keyword)) {
+       laco_is_match(matches, command_keyword)) {
       handler(laco, arguments);
       result = true;
       break;
