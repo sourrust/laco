@@ -4,7 +4,7 @@ BasedOnStyle: Chromium
 # This feature was added in clang-format 3.7.0
 AlignConsecutiveAssignments: true
 AccessModifierOffset: -2
-ColumnLimit: 76
+ColumnLimit: 78
 Standard: Cpp11
 SpaceBeforeParens: Never
 ...
