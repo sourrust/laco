@@ -5,7 +5,7 @@ BasedOnStyle: Chromium
 AlignConsecutiveAssignments: true
 AccessModifierOffset: -2
 ColumnLimit: 78
+ContinuationIndentWidth: 2
 Standard: Cpp11
 SpaceBeforeParens: Never
 ...
-
