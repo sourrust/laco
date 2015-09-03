@@ -43,8 +43,8 @@ void laco_print_debug_info(LacoState* laco, const char* function_name) {
     "Source file:     \t%s\n"
     "Line defined on: \t%d\n"
     "Current line:    \t%d\n",
-    debug_info.what, debug_info.source,
-    debug_info.linedefined, debug_info.currentline);
+    debug_info.what, debug_info.source, debug_info.linedefined,
+    debug_info.currentline);
 
   /* Pop off the extra fields from the top of the stack */
   if(i > 1) {

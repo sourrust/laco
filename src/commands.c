@@ -10,9 +10,9 @@
 #include "util.h"
 #include "commands/debugger.h"
 
-static const char* quit_matches[] = {"quit", "q", NULL};
-static const char* help_matches[] = {"help", "?", NULL};
-static const char* load_matches[] = {"load", NULL};
+static const char* quit_matches[]       = {"quit", "q", NULL};
+static const char* help_matches[]       = {"help", "?", NULL};
+static const char* load_matches[]       = {"load", NULL};
 static const char* debug_info_matches[] = {"info", NULL};
 
 static void handle_quit(LacoState* laco, const char** arguments) {
@@ -28,7 +28,7 @@ static void handle_help(LacoState* laco, const char** arguments) {
     "    :?, :help     Display this list of commands\n"
     "    :load <file>  Load in the given file name"
     /* "    :info <name>  Show information on given function" */
-  );
+    );
 }
 
 static void handle_load(LacoState* laco, const char** arguments) {
@@ -72,7 +72,7 @@ void laco_handle_command(LacoState* laco, char* line) {
 
   /* Alias for parsed out words within the line */
   const char* command    = command_words[0];
-  const char** arguments = (const char**) command_words + 1;
+  const char** arguments = (const char**)command_words + 1;
 
   laco_dispatch(line_commands, laco, command, arguments);
 

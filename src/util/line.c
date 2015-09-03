@@ -54,7 +54,7 @@ static bool is_printable(lua_State* L, int status) {
   if(status == LUA_ERRSYNTAX) {
     mess = lua_tostring(L, -1);
 
-    is_literal  = strstr(mess,  "unexpected symbol") != NULL;
+    is_literal  = strstr(mess, "unexpected symbol") != NULL;
     is_variable = strstr(mess, "'=' expected") != NULL;
 
     if(is_literal || is_variable) {
@@ -131,15 +131,18 @@ bool laco_load_line(LacoState* laco) {
 
   lua_settop(L, 0);
 
-  if(!pushline(laco, true)) return false;
+  if(!pushline(laco, true))
+    return false;
 
   /* Until complete line */
   while(status != -1) {
-    status = luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1),
-                             "=stdin");
+    status =
+      luaL_loadbuffer(L, lua_tostring(L, 1), lua_strlen(L, 1), "=stdin");
 
-    if(is_printable(L, status)) continue;
-    if(!incomplete(L, status)) break;
+    if(is_printable(L, status))
+      continue;
+    if(!incomplete(L, status))
+      break;
     if(!pushline(laco, false)) {
       status = -1;
       break;
